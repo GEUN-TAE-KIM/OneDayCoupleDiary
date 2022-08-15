@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.OneDayCoupleDiary.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">@color/purple_200</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
+            @drawable/splash_screen
+        </item>
+        <item name="android:windowSplashScreenAnimationDuration" tools:targetApi="s">1000</item>
+        <!--<item name=”android:windowSplashScreenIconBackground”>@color/...</item>
+        <item name=”android:windowSplashScreenBrandingImage”>@drawable/...</item>-->
+        <item name="postSplashScreenTheme">@style/Theme.OneDayCoupleDiary</item>
+    </style>
+</resources>
