@@ -1,4 +1,4 @@
-package jp.co.archive_asia.onedaycouplediary.fragment
+package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import jp.co.archive_asia.onedaycouplediary.R
 
-class TimeLineFragment : Fragment() {
+class CalendarFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_time_line, container, false)
+        return inflater.inflate(R.layout.fragment_calendar, container, false)
     }
+
 }

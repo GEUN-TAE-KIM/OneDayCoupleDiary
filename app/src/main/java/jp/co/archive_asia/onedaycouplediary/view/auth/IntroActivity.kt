@@ -1,4 +1,4 @@
-package jp.co.archive_asia.onedaycouplediary.auth
+package jp.co.archive_asia.onedaycouplediary.view.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

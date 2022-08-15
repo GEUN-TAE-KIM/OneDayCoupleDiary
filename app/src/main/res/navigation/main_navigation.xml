@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/navigation_calender"
-        android:name="jp.co.archive_asia.onedaycouplediary.fragment.CalendarFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/navigation_chatting"
-        android:name="jp.co.archive_asia.onedaycouplediary.fragment.ChattingFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.ChattingFragment"
         android:label="fragment_chatting"
         tools:layout="@layout/fragment_chatting" />
     <fragment
         android:id="@+id/navigation_myInfo"
-        android:name="jp.co.archive_asia.onedaycouplediary.fragment.MyInfoFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.MyInfoFragment"
         android:label="fragment_my_info"
         tools:layout="@layout/fragment_my_info" />
     <fragment
         android:id="@+id/navigation_question"
-        android:name="jp.co.archive_asia.onedaycouplediary.fragment.QuestionFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.QuestionFragment"
         android:label="fragment_question"
         tools:layout="@layout/fragment_question" />
     <fragment
         android:id="@+id/navigation_timeline"
-        android:name="jp.co.archive_asia.onedaycouplediary.fragment.TimeLineFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.TimeLineFragment"
         android:label="fragment_time_line"
         tools:layout="@layout/fragment_time_line" />
 </navigation>

@@ -1,12 +1,12 @@
-package jp.co.archive_asia.onedaycouplediary.auth
+package jp.co.archive_asia.onedaycouplediary.view.auth
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import jp.co.archive_asia.onedaycouplediary.R
 
-class JoinActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_join)
+        setContentView(R.layout.activity_login)
     }
 }
