@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.OneDayCoupleDiary" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/main_pink</item>
+        <item name="colorPrimaryVariant">@color/pink_100</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -15,8 +15,7 @@
     </style>
 
     <style name="Theme.OneDayCoupleDiary.Splash">
-        <item name="android:windowBackground">@color/purple_200</item>
+        <item name="android:windowBackground">@color/pink_300</item>
     </style>
-
 
 </resources>

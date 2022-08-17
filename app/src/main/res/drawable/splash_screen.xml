@@ -5,6 +5,7 @@
     <item>
         <color android:color="@color/black"/>
     </item>
+
     <item>
         <bitmap
             android:gravity="center"
