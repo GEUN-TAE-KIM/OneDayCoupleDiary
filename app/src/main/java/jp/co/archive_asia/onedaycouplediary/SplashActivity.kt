@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import jp.co.archive_asia.onedaycouplediary.view.auth.IntroActivity
 
-class SplashActivity: AppCompatActivity () {
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
