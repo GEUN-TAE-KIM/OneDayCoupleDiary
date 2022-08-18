@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.OneDayCoupleDiary" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/main_pink</item>
+        <item name="colorPrimaryVariant">@color/pink_100</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/pink_200</item>
+        <item name="colorSecondaryVariant">@color/pink_400</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
@@ -15,7 +15,7 @@
     </style>
 
     <style name="Theme.OneDayCoupleDiary.Splash" parent="Theme.SplashScreen">
-        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/purple_200</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/pink_300</item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
             @drawable/splash_screen
         </item>

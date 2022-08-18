@@ -31,10 +31,10 @@ android {
     }
 
     // data binding
-    dataBinding{
+    dataBinding {
         enabled true
     }
-    
+
 }
 
 dependencies {
