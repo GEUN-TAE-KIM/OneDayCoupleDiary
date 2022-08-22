@@ -28,7 +28,6 @@ class CalendarAdapter : ListAdapter<CalendarData, CalendarAdapter.ItemViewHolder
                 val binding = ItemCalendarBinding.inflate(
                     layoutInflater, parent, false
                 )
-
                 return ItemViewHolder(binding)
             }
         }
