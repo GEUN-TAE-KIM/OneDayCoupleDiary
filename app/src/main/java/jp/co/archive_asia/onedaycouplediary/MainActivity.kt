@@ -1,10 +1,7 @@
 package jp.co.archive_asia.onedaycouplediary
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
