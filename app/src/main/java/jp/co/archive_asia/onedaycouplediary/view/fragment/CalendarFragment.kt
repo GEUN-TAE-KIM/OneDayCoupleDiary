@@ -5,25 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
-import jp.co.archive_asia.onedaycouplediary.model.CalendarData
-
+import jp.co.archive_asia.onedaycouplediary.util.CalendarUtil.Companion.selectedDate
 import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
 import java.time.LocalDate
-
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.*
-
 
 class CalendarFragment : Fragment() {
 
     private lateinit var binding: FragmentCalendarBinding
-    lateinit var selectedDate: LocalDate
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,65 +28,79 @@ class CalendarFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calendar, container, false)
 
+        //現在日
         selectedDate = LocalDate.now()
 
-        setMonthView()
-
+        //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
             setMonthView()
         }
 
+        //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
             setMonthView()
         }
 
+        setMonthView()
+
         return binding.root
     }
 
     private fun setMonthView() {
+        // 年月 textview
         binding.monthYearText.text = monthYearFromDate(selectedDate)
 
-        var manager: RecyclerView.LayoutManager = GridLayoutManager(context, 7)
+        // 日、生まれる
+        val dayList = dayInMonthArray(selectedDate)
+
+        val adapter = CalendarAdapter(dayList)
+
+        val manager: RecyclerView.LayoutManager = GridLayoutManager(context, 7)
 
         binding.recyclerView.layoutManager = manager
 
-        val adapter = CalendarAdapter()
-
         binding.recyclerView.adapter = adapter
+    }
 
-        val calendar = Calendar.getInstance()
+    private fun monthYearFromDate(date: LocalDate): String {
 
-        calendar.timeInMillis = System.currentTimeMillis()
+        val formatter = DateTimeFormatter.ofPattern("yyyy年 MM月")
 
-        calendar.set(
-            Calendar.DAY_OF_MONTH, 1
-        )
+        //受け取った日付を該当formatに変更
+        return date.format(formatter)
+    }
 
-        val tmpCal = calendar.timeInMillis
-        calendar.timeInMillis = tmpCal
+    private fun dayInMonthArray(date: LocalDate): ArrayList<LocalDate?> {
 
-        val lastDay = calendar.getActualMaximum(Calendar.DATE)
+        val dayList = ArrayList<LocalDate?>()
 
-        val first = selectedDate.withDayOfMonth(1)
+        val yearMonth = YearMonth.from(date)
 
-        val dayOfWeek = first.dayOfWeek.value
+        // 月の最後の日付を持ってくる。
+        val lastDay = yearMonth.lengthOfMonth()
 
-        val list = MutableList(dayOfWeek, init = { CalendarData() })
+        // 月の最前の日付を持ってくる。
+        val firstDay = selectedDate.withDayOfMonth(1)
 
-        for (i in 1..lastDay) {
-            list.add(
-                CalendarData(dayOfWeek, i)
-            )
+        // 初日の日を持ってくる。
+        val dayOfweek = firstDay.dayOfWeek.value
+
+        for (i in 1..41) {
+            if (i <= dayOfweek || i > (lastDay + dayOfweek)) {
+                dayList.add(null)
+            } else {
+                // LocalDate
+                dayList.add(
+                    LocalDate.of(
+                        selectedDate.year,
+                        selectedDate.month, i - dayOfweek
+                    )
+                )
+            }
         }
-        adapter.submitList(list)
+        return dayList
     }
 
-    private fun monthYearFromDate(data: LocalDate): String {
-
-        var formatter = DateTimeFormatter.ofPattern("yyyy年 MM月")
-
-        return data.format(formatter)
-    }
 }
