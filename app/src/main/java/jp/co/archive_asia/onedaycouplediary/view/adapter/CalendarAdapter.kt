@@ -1,11 +1,12 @@
 package jp.co.archive_asia.onedaycouplediary.view.adapter
 
 import android.graphics.Color
-import android.util.Log
+import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import java.time.LocalDate
@@ -29,7 +30,7 @@ class CalendarAdapter(private val dayList: ArrayList<LocalDate?>) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         // 日を入る
-        var day = dayList[holder.adapterPosition]
+        val day = dayList[holder.adapterPosition]
 
         if (day == null) {
             holder.dayText.text = ""
@@ -40,12 +41,16 @@ class CalendarAdapter(private val dayList: ArrayList<LocalDate?>) :
             // 現在の日を色塗り
             if (day == LocalDate.now())
                 holder.itemView.setBackgroundColor(Color.GRAY)
+
         }
 
         // 日、クリックイベント
-        holder.itemView.setOnClickListener {
+        holder.dayText.setOnClickListener {
 
-            Log.d("click", "day click")
+            holder.itemView.setBackgroundColor(Color.BLUE)
+
+            Toast.makeText(holder.dayText.context, "${dayList[position]}", Toast.LENGTH_SHORT)
+                .show()
 
         }
 

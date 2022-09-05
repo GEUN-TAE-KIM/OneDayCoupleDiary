@@ -1,32 +1,22 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
-import jp.co.archive_asia.onedaycouplediary.util.CalendarUtil.Companion.selectedDate
 import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
+import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class CalendarFragment : Fragment() {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar) {
 
-    private lateinit var binding: FragmentCalendarBinding
+    lateinit var selectedDate: LocalDate
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_calendar, container, false)
+    override fun initView() {
+        super.initView()
 
         //現在日
         selectedDate = LocalDate.now()
@@ -45,7 +35,6 @@ class CalendarFragment : Fragment() {
 
         setMonthView()
 
-        return binding.root
     }
 
     private fun setMonthView() {
