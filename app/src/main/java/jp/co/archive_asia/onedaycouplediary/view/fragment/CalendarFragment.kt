@@ -1,15 +1,14 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
-import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import java.util.*
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar) {
 
@@ -24,17 +23,13 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
-            setMonthView()
         }
 
         //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
-            setMonthView()
         }
-
         setMonthView()
-
     }
 
     private fun setMonthView() {
