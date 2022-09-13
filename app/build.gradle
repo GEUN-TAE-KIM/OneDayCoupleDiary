@@ -69,5 +69,7 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 
+    implementation 'androidx.fragment:fragment-ktx:1.5.2'
+
 
 }

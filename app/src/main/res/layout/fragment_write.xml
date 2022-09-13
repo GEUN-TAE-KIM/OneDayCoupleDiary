@@ -2,9 +2,10 @@
 <layout>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".view.fragment.WriteFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +38,8 @@
                 android:layout_height="30dp"
                 android:layout_margin="20dp"
                 android:background="@android:color/transparent"
-                android:hint="Title" />
+                android:hint="Title"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/contentArea"
@@ -59,5 +61,4 @@
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

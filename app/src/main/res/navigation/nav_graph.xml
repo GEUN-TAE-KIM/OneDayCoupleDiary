@@ -52,7 +52,17 @@
         android:id="@+id/calendarFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment"
         android:label="CalendarFragment"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_writeFragment"
+            app:destination="@id/writeFragment"
+            app:enterAnim="@anim/from_bottom" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteFragment"
+        android:label="WriteFragment"
+        tools:layout="@layout/fragment_write"/>
 
 
 </navigation>

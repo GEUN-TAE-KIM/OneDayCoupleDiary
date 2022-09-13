@@ -5,32 +5,42 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.databinding.WriteItemBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
+import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 
-class WriteAdapter : RecyclerView.Adapter<WriteAdapter.MyViewHolder>() {
+class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
+    RecyclerView.Adapter<WriteAdapter.MyViewHolder>() {
 
     private var writeList = emptyList<Write>()
 
     class MyViewHolder(private var binding: WriteItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(write: Write) {
+        lateinit var write: Write
+        lateinit var calendarViewModel: CalendarViewModel
+
+        fun bind(write: Write, calendarViewModel: CalendarViewModel) {
             binding.write = write
-            binding.executePendingBindings()
+            this.calendarViewModel = calendarViewModel
+
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewTypde: Int): MyViewHolder {
         val binding = WriteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = writeList[position]
-        holder.bind(currentItem)
+        holder.bind(writeList[position], calendarViewModel)
     }
 
     override fun getItemCount(): Int {
         return writeList.size
+    }
+
+    fun setData(write: List<Write>) {
+        writeList = write
+        notifyDataSetChanged()
     }
 }
