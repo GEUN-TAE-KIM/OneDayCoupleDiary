@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1475" />
+        <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.186" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.1830169677734375" />
         <entry key="app/src/main/res/layout/activity_join.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.27395833333333336" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.15885416666666666" />
+        <entry key="app/src/main/res/layout/caledar_write.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.2504528985507246" />
         <entry key="app/src/main/res/layout/fragment_chatting.xml" value="0.2504528985507246" />
         <entry key="app/src/main/res/layout/fragment_intro.xml" value="0.182518115942029" />
@@ -18,6 +22,12 @@
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.2504528985507246" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/fragment_time_line.xml" value="0.2504528985507246" />
+        <entry key="app/src/main/res/layout/fragment_write.xml" value="0.2713541666666667" />
+        <entry key="app/src/main/res/layout/item_calendar.xml" value="0.2324074074074074" />
+        <entry key="app/src/main/res/layout/item_write_list.xml" value="0.2324074074074074" />
+        <entry key="app/src/main/res/layout/layout_dialog.xml" value="0.2713541666666667" />
+        <entry key="app/src/main/res/layout/write_item.xml" value="0.2713541666666667" />
+        <entry key="app/src/main/res/layout/write_list.xml" value="0.22179487179487178" />
         <entry key="app/src/main/res/menu/navigation_main_menu.xml" value="0.27291666666666664" />
       </map>
     </option>
