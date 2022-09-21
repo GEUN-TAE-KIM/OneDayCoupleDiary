@@ -11,7 +11,7 @@ abstract class WriteDatabase : RoomDatabase() {
 
     abstract fun writeDao(): WriteDao
 
-    /* companion object {
+     /*companion object {
 
          @Volatile
          private var INSTANCE: WriteDatabase? = null
