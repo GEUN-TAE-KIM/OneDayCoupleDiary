@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory(private val application: Activity) : ViewModelProvider.Factory {
+class CalendarViewModelFactory(private val application: Activity) : ViewModelProvider.Factory {
 
-   override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
             return CalendarViewModel(application) as T
         }
-       throw IllegalArgumentException("Failed to create ViewModel: ${modelClass.name}")
+        throw IllegalArgumentException("Failed to create ViewModel: ${modelClass.name}")
 
     }
 

@@ -2,7 +2,6 @@ package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
@@ -16,14 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.ViewModelFactory
+import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
 
 class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar) {
 
     lateinit var selectedDate: LocalDate
     private val adapter: WriteAdapter by lazy { WriteAdapter(calendarViewModel) }
     private val calendarViewModel: CalendarViewModel by viewModels {
-        ViewModelFactory(
+        CalendarViewModelFactory(
             requireActivity()
         )
     }

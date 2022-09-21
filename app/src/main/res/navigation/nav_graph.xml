@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/writeFragment"
-        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.DiaryFragment"
         android:label="WriteFragment"
         tools:layout="@layout/fragment_write">
         <action

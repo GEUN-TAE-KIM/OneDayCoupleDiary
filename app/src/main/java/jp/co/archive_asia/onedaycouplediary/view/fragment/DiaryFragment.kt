@@ -8,13 +8,13 @@ import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.ViewModelFactory
+import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
+import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 
-class WriteFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write) {
+class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write) {
 
-    private val calendarViewModel: CalendarViewModel by viewModels {
-        ViewModelFactory(
+    private val diaryViewModel: DiaryViewModel by viewModels {
+        DiaryViewModelFactory(
             requireActivity()
         )
     }
@@ -34,7 +34,7 @@ class WriteFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         val content = binding.contentArea.text.toString()
 
         val newData = Write(0, title, content)
-        calendarViewModel.addData(newData)
+        diaryViewModel.addData(newData)
         Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
         Log.d("add",newData.toString())
         findNavController().navigate(R.id.action_writeFragment_to_calendarFragment)
