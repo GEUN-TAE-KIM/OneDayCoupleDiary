@@ -12,7 +12,11 @@ import jp.co.archive_asia.onedaycouplediary.viewmodel.ViewModelFactory
 
 class WriteFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write) {
 
-    private val calendarViewModel: CalendarViewModel by viewModels{ ViewModelFactory(requireActivity()) }
+    private val calendarViewModel: CalendarViewModel by viewModels {
+        ViewModelFactory(
+            requireActivity()
+        )
+    }
 
     override fun initView() {
 

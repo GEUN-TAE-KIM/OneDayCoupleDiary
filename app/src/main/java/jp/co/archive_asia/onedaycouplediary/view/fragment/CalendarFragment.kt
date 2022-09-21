@@ -22,8 +22,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
     lateinit var selectedDate: LocalDate
     private val adapter: WriteAdapter by lazy { WriteAdapter(calendarViewModel) }
-    private val calendarViewModel: CalendarViewModel by viewModels{ViewModelFactory(requireActivity()) }
-
+    private val calendarViewModel: CalendarViewModel by viewModels {
+        ViewModelFactory(
+            requireActivity()
+        )
+    }
 
     override fun initView() {
         super.initView()
@@ -45,10 +48,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             findNavController().navigate(R.id.action_calendarFragment_to_writeFragment)
         }
 
-        binding.textRecyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+        binding.textRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.textRecyclerView.adapter = adapter
 
-        calendarViewModel.getAllData.observe(viewLifecycleOwner, Observer{
+        calendarViewModel.getAllData.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
         })
 
