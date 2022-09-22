@@ -16,26 +16,5 @@ class CalendarViewModel(application: Activity) : ViewModel() {
 
     val getAllData: LiveData<List<Write>> = repository.getAllData.asLiveData()
 
-    fun addData(write: Write) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addData(write)
-        }
-    }
-
-    fun updateData(write: Write) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateData(write)
-        }
-    }
-
-    fun deleteData(write: Write) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteData(write)
-        }
-    }
-
-    fun searchDatabase(searchQuery: String): LiveData<List<Write>> {
-        return repository.searchDatabase(searchQuery).asLiveData()
-    }
 
 }
