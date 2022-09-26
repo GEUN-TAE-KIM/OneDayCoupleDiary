@@ -14,12 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
 
-class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar) {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar),
+    CalendarAdapter.OnItemListener {
 
-    lateinit var selectedDate: LocalDate
     private val adapter: WriteAdapter by lazy { WriteAdapter(calendarViewModel) }
     private val calendarViewModel: CalendarViewModel by viewModels {
         CalendarViewModelFactory(
@@ -30,21 +31,21 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
     override fun initView() {
         super.initView()
 
-        //現在日
-        selectedDate = LocalDate.now()
-
         //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
+            setMonthView()
         }
 
         //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
+            setMonthView()
         }
 
         binding.dialogButton.setOnClickListener {
             findNavController().navigate(R.id.action_calendarFragment_to_writeFragment)
+
         }
 
         binding.textRecyclerView.layoutManager =
@@ -56,7 +57,6 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         })
 
         setMonthView()
-
     }
 
     private fun setMonthView() {
@@ -66,14 +66,16 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         // 日、生まれる
         val dayList = dayInMonthArray(selectedDate)
 
-        val adapter = CalendarAdapter(dayList)
+        val adapter = CalendarAdapter(dayList, this)
 
         val manager: RecyclerView.LayoutManager = GridLayoutManager(context, 7)
 
         binding.recyclerView.layoutManager = manager
 
         binding.recyclerView.adapter = adapter
+
     }
+
 
     private fun monthYearFromDate(date: LocalDate): String {
 
@@ -83,7 +85,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         return date.format(formatter)
     }
 
-    private fun dayInMonthArray(date: LocalDate): ArrayList<LocalDate?> {
+    private fun dayInMonthArray(date: LocalDate?): ArrayList<LocalDate?> {
 
         val dayList = ArrayList<LocalDate?>()
 
@@ -96,22 +98,30 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         val firstDay = selectedDate.withDayOfMonth(1)
 
         // 初日の日を持ってくる。
-        val dayOfweek = firstDay.dayOfWeek.value
+        val dayOfWeek = firstDay.dayOfWeek.value
 
         for (i in 1..41) {
-            if (i <= dayOfweek || i > (lastDay + dayOfweek)) {
+            if (i <= dayOfWeek || i > (lastDay + dayOfWeek)) {
                 dayList.add(null)
             } else {
                 // LocalDate
                 dayList.add(
                     LocalDate.of(
                         selectedDate.year,
-                        selectedDate.month, i - dayOfweek
+                        selectedDate.month, i - dayOfWeek
                     )
                 )
             }
         }
         return dayList
     }
+
+    override fun onItemClick(position: Int, dayText: LocalDate?) {
+        if (dayText != null) {
+            selectedDate = dayText
+            setMonthView()
+        }
+    }
+
 
 }

@@ -1,6 +1,5 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,8 +35,8 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         val newData = Write(0, title, content)
         diaryViewModel.addData(newData)
         Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
-        Log.d("add",newData.toString())
-        findNavController().navigate(R.id.action_writeFragment_to_calendarFragment)
+        findNavController().popBackStack()
+
     }
 
 }
