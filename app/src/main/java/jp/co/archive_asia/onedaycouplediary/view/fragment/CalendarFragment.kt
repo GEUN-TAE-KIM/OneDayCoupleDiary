@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
@@ -28,19 +30,30 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         )
     }
 
+    private val dayList = dayInMonthArray(selectedDate)
+    private val adapters = CalendarAdapter(dayList, this)
+
+    var year : Int = 0
+    var month : Int = 0
+    var day : Int = 0
+
     override fun initView() {
         super.initView()
 
         //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
-            setMonthView()
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+            binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
         //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
-            setMonthView()
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+            binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
         binding.dialogButton.setOnClickListener {
@@ -56,72 +69,41 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             adapter.setData(it)
         })
 
+        binding.recyclerView.setOnClickListener {
+
+
+
+
+            calendarViewModel.readDateData(year, month, day)
+
+        }
+
+        calendarViewModel.currentData.observe(viewLifecycleOwner, Observer {
+            adapter.setData(it)
+        })
+
         setMonthView()
+
     }
 
     private fun setMonthView() {
+
         // 年月 textview
         binding.monthYearText.text = monthYearFromDate(selectedDate)
 
-        // 日、生まれる
-        val dayList = dayInMonthArray(selectedDate)
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 7)
 
-        val adapter = CalendarAdapter(dayList, this)
+        binding.recyclerView.adapter = adapters
 
-        val manager: RecyclerView.LayoutManager = GridLayoutManager(context, 7)
-
-        binding.recyclerView.layoutManager = manager
-
-        binding.recyclerView.adapter = adapter
-
-    }
-
-
-    private fun monthYearFromDate(date: LocalDate): String {
-
-        val formatter = DateTimeFormatter.ofPattern("yyyy年 MM月")
-
-        //受け取った日付を該当formatに変更
-        return date.format(formatter)
-    }
-
-    private fun dayInMonthArray(date: LocalDate?): ArrayList<LocalDate?> {
-
-        val dayList = ArrayList<LocalDate?>()
-
-        val yearMonth = YearMonth.from(date)
-
-        // 月の最後の日付を持ってくる。
-        val lastDay = yearMonth.lengthOfMonth()
-
-        // 月の最前の日付を持ってくる。
-        val firstDay = selectedDate.withDayOfMonth(1)
-
-        // 初日の日を持ってくる。
-        val dayOfWeek = firstDay.dayOfWeek.value
-
-        for (i in 1..41) {
-            if (i <= dayOfWeek || i > (lastDay + dayOfWeek)) {
-                dayList.add(null)
-            } else {
-                // LocalDate
-                dayList.add(
-                    LocalDate.of(
-                        selectedDate.year,
-                        selectedDate.month, i - dayOfWeek
-                    )
-                )
-            }
-        }
-        return dayList
     }
 
     override fun onItemClick(position: Int, dayText: LocalDate?) {
         if (dayText != null) {
             selectedDate = dayText
-            setMonthView()
+
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+
         }
     }
-
-
 }

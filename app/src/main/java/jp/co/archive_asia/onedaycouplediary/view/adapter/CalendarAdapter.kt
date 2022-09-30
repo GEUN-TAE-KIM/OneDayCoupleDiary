@@ -10,10 +10,10 @@ import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import java.time.LocalDate
 
 class CalendarAdapter(
-    private val dayList: ArrayList<LocalDate?>,
-    private val onItemListener: OnItemListener
+private var dayList: ArrayList<LocalDate?>,
+private val onItemListener: OnItemListener
 ) :
-    RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
+RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
 
     interface OnItemListener {
         fun onItemClick(position: Int, dayText: LocalDate?)
@@ -21,25 +21,21 @@ class CalendarAdapter(
 
     class ItemViewHolder(
         itemView: View,
-        onItemListener: OnItemListener,
-        days: ArrayList<LocalDate?>
+        private val onItemListener: OnItemListener,
+        private val days: ArrayList<LocalDate?>
     ) :
 
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-        private val dayList: ArrayList<LocalDate?>
         val dayText: TextView
-        private val onItemListener: OnItemListener
 
         override fun onClick(view: View) {
-            onItemListener.onItemClick(adapterPosition, dayList[adapterPosition])
+            onItemListener.onItemClick(adapterPosition, days[adapterPosition])
         }
 
         init {
             dayText = itemView.findViewById(R.id.dayText)
-            this.onItemListener = onItemListener
             itemView.setOnClickListener(this)
-            this.dayList = days
 
         }
 
@@ -63,7 +59,6 @@ class CalendarAdapter(
             //該当する日を入る
             holder.dayText.text = day.dayOfMonth.toString()
 
-            // 現在の日を色塗り
             if (day == CalendarUtils.selectedDate) {
                 holder.itemView.setBackgroundResource(R.color.pink_300)
             }
@@ -72,5 +67,11 @@ class CalendarAdapter(
 
     override fun getItemCount(): Int {
         return dayList.size
+    }
+
+    fun update (dayList: ArrayList<LocalDate?>) {
+        this.dayList = dayList
+        notifyDataSetChanged()
+
     }
 }

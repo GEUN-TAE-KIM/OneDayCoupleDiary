@@ -24,4 +24,9 @@ class WriteRepository(private val writeDao: WriteDao) {
         return writeDao.searchDatabase(searchQuery)
     }
 
+    fun readDateData(year : Int, month : Int, day : Int): List<Write>
+    {
+        return writeDao.readDateData(year, month, day)
+    }
+
 }
