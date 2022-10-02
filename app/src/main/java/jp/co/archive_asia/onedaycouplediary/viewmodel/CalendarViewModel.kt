@@ -13,11 +13,11 @@ class CalendarViewModel(application: Activity) : ViewModel() {
     private val writeDao = WriteDatabase.getDatabase(application).writeDao()
     private val repository: WriteRepository = WriteRepository(writeDao)
 
+    val getAllData: LiveData<List<Write>> = repository.getAllData.asLiveData()
+
     private var _currentData = MutableLiveData<List<Write>>()
     val currentData : LiveData<List<Write>>
         get() = _currentData
-
-    val getAllData: LiveData<List<Write>> = repository.getAllData.asLiveData()
 
     fun readDateData(year : Int, month : Int, day : Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -27,3 +27,4 @@ class CalendarViewModel(application: Activity) : ViewModel() {
     }
 
 }
+

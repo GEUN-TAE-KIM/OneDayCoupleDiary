@@ -1,5 +1,6 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
@@ -33,9 +35,9 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
     private val dayList = dayInMonthArray(selectedDate)
     private val adapters = CalendarAdapter(dayList, this)
 
-    var year : Int = 0
-    var month : Int = 0
-    var day : Int = 0
+    var year : Int = selectedDate.year
+    var month : Int = selectedDate.monthValue
+    var day : Int = selectedDate.dayOfMonth
 
     override fun initView() {
         super.initView()
@@ -70,16 +72,12 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         })
 
         binding.recyclerView.setOnClickListener {
-
-
-
-
             calendarViewModel.readDateData(year, month, day)
-
         }
 
-        calendarViewModel.currentData.observe(viewLifecycleOwner, Observer {
+        calendarViewModel.currentData.observe(viewLifecycleOwner, Observer{
             adapter.setData(it)
+            Log.d("select","initView: $it")
         })
 
         setMonthView()
@@ -106,4 +104,5 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         }
     }
+
 }

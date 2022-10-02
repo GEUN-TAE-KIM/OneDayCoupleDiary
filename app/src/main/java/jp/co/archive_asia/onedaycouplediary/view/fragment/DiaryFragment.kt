@@ -1,15 +1,24 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import android.util.Log
+import android.widget.TimePicker
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
+import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
+import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write) {
 
@@ -19,9 +28,9 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         )
     }
 
-    var year : Int = 0
-    var month : Int = 0
-    var day : Int = 0
+    var year : Int = CalendarUtils.selectedDate.year
+    var month : Int = CalendarUtils.selectedDate.monthValue
+    var day : Int = CalendarUtils.selectedDate.dayOfMonth
 
     override fun initView() {
 
@@ -31,7 +40,11 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
             addDataWrite()
         }
 
+        binding.textDate.text =
+            CalendarUtils.selectedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+
     }
+
 
     private fun addDataWrite() {
         val title = binding.titleArea.text.toString()
@@ -42,6 +55,7 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         Log.d("add",newData.toString())
         Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
+
 
     }
 

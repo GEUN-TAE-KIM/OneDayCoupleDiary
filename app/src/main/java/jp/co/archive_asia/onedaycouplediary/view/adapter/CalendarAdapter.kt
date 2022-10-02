@@ -7,7 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CalendarAdapter(
 private var dayList: ArrayList<LocalDate?>,
@@ -74,4 +77,5 @@ RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
         notifyDataSetChanged()
 
     }
+
 }

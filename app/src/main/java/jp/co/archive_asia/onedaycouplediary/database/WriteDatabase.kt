@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import jp.co.archive_asia.onedaycouplediary.model.Write
 
-@Database(entities = [Write::class], version = 2, exportSchema = false)
+@Database(entities = [Write::class], version = 1, exportSchema = false)
 abstract class WriteDatabase : RoomDatabase() {
 
     abstract fun writeDao(): WriteDao
