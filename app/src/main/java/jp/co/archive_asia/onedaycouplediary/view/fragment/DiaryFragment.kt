@@ -27,10 +27,9 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
             requireActivity()
         )
     }
-
-    var year : Int = CalendarUtils.selectedDate.year
-    var month : Int = CalendarUtils.selectedDate.monthValue
-    var day : Int = CalendarUtils.selectedDate.dayOfMonth
+    var year = CalendarFragment().year
+    var month = CalendarFragment().month
+    var day = CalendarFragment().day
 
     override fun initView() {
 

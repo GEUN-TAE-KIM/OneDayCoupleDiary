@@ -35,9 +35,9 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
     private val dayList = dayInMonthArray(selectedDate)
     private val adapters = CalendarAdapter(dayList, this)
 
-    var year : Int = selectedDate.year
-    var month : Int = selectedDate.monthValue
-    var day : Int = selectedDate.dayOfMonth
+    var year: Int = selectedDate.year
+    var month: Int = selectedDate.monthValue
+    var day: Int = selectedDate.dayOfMonth
 
     override fun initView() {
         super.initView()
@@ -67,18 +67,23 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.textRecyclerView.adapter = adapter
 
-        calendarViewModel.getAllData.observe(viewLifecycleOwner, Observer {
+        /*calendarViewModel.getAllData.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
-        })
+        })*/
 
         binding.recyclerView.setOnClickListener {
             calendarViewModel.readDateData(year, month, day)
         }
 
-        calendarViewModel.currentData.observe(viewLifecycleOwner, Observer{
+
+        calendarViewModel.getAllData.observe(viewLifecycleOwner) {
+            calendarViewModel.readDateData(year, month, day)
+        }
+
+        calendarViewModel.currentData.observe(viewLifecycleOwner) {
             adapter.setData(it)
-            Log.d("select","initView: $it")
-        })
+            Log.d("select", "initView: $it")
+        }
 
         setMonthView()
 
