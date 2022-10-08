@@ -13,10 +13,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarAdapter(
-private var dayList: ArrayList<LocalDate?>,
-private val onItemListener: OnItemListener
+    private var dayList: ArrayList<LocalDate?>,
+    private val onItemListener: OnItemListener
 ) :
-RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
+    RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
 
     interface OnItemListener {
         fun onItemClick(position: Int, dayText: LocalDate?)
@@ -72,7 +72,7 @@ RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
         return dayList.size
     }
 
-    fun update (dayList: ArrayList<LocalDate?>) {
+    fun update(dayList: ArrayList<LocalDate?>) {
         this.dayList = dayList
         notifyDataSetChanged()
 

@@ -27,7 +27,8 @@ class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewTypde: Int): MyViewHolder {
-        val binding = ItemWriteListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemWriteListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 

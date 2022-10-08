@@ -1,6 +1,5 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
@@ -11,7 +10,6 @@ import java.time.LocalDate
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
-import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
