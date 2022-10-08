@@ -16,8 +16,7 @@ class CalendarViewModel(application: Activity) : ViewModel() {
     // val getAllData: LiveData<List<Write>> = repository.getAllData.asLiveData()
 
     private var _currentData = MutableLiveData<List<Write>>()
-    val currentData: LiveData<List<Write>>
-        get() = _currentData
+    val currentData: LiveData<List<Write>> = _currentData
 
     fun readDateData(date: String): LiveData<List<Write>> {
         viewModelScope.launch(Dispatchers.IO) {

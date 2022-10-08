@@ -1,5 +1,6 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
@@ -103,8 +104,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
     private fun getEvent(date: String) {
 
-        calendarViewModel.readDateData(date).observe(viewLifecycleOwner) {
-            adapter.setData(it)
+        calendarViewModel.readDateData(date)
+
+        calendarViewModel.currentData.observe(viewLifecycleOwner) { date ->
+            adapter.setData(date)
         }
 
     }
