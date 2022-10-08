@@ -27,9 +27,6 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
             requireActivity()
         )
     }
-    var year = CalendarFragment().year
-    var month = CalendarFragment().month
-    var day = CalendarFragment().day
 
     override fun initView() {
 
@@ -44,17 +41,17 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
 
     }
 
-
     private fun addDataWrite() {
+
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
+        var date = CalendarFragment().date
 
-        val newData = Write(0, title, content, year, month, day)
+        val newData = Write(0, title, content, date)
         diaryViewModel.addData(newData)
-        Log.d("add",newData.toString())
+        Log.d("add", newData.toString())
         Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
         findNavController().popBackStack()
-
 
     }
 

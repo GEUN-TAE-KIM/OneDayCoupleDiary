@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class WriteRepository(private val writeDao: WriteDao) {
 
-    val getAllData: Flow<List<Write>> = writeDao.getAllData()
+    // val getAllData: Flow<List<Write>> = writeDao.getAllData()
 
     suspend fun addData(write: Write) {
         writeDao.addData(write)
@@ -20,12 +20,13 @@ class WriteRepository(private val writeDao: WriteDao) {
         writeDao.deleteData(write)
     }
 
+    suspend fun readDateData(date: String): List<Write> {
+        return writeDao.readDateData(date)
+    }
+
     fun searchDatabase(searchQuery: String): Flow<List<Write>> {
         return writeDao.searchDatabase(searchQuery)
     }
 
-    fun readDateData(year: Int, month: Int, day: Int): List<Write> {
-        return writeDao.readDateData(year, month, day)
-    }
 
 }

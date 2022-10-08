@@ -1,19 +1,14 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
@@ -21,6 +16,7 @@ import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFro
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
+import java.time.format.DateTimeFormatter
 
 class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar),
     CalendarAdapter.OnItemListener {
@@ -32,12 +28,10 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         )
     }
 
-    private val dayList = dayInMonthArray(selectedDate)
+    private var dayList = dayInMonthArray(selectedDate)
     private val adapters = CalendarAdapter(dayList, this)
 
-    var year: Int = selectedDate.year
-    var month: Int = selectedDate.monthValue
-    var day: Int = selectedDate.dayOfMonth
+    var date = selectedDate.toString()
 
     override fun initView() {
         super.initView()
@@ -63,30 +57,24 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         }
 
-        binding.textRecyclerView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding.textRecyclerView.adapter = adapter
-
-        /*calendarViewModel.getAllData.observe(viewLifecycleOwner, Observer {
-            adapter.setData(it)
-        })*/
-
-        binding.recyclerView.setOnClickListener {
-            calendarViewModel.readDateData(year, month, day)
-        }
-
-
-        calendarViewModel.getAllData.observe(viewLifecycleOwner) {
-            calendarViewModel.readDateData(year, month, day)
-        }
-
-        calendarViewModel.currentData.observe(viewLifecycleOwner) {
-            adapter.setData(it)
-            Log.d("select", "initView: $it")
-        }
-
         setMonthView()
 
+    }
+
+    override fun onItemClick(position: Int, dayText: LocalDate?) {
+
+        if (dayText != null) {
+            selectedDate = dayText
+
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+
+        }
+
+        binding.textDate.text =
+            selectedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+
+        setEvent(selectedDate.toString())
     }
 
     private fun setMonthView() {
@@ -98,16 +86,27 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         binding.recyclerView.adapter = adapters
 
+        setEvent(selectedDate.toString())
+
+
     }
 
-    override fun onItemClick(position: Int, dayText: LocalDate?) {
-        if (dayText != null) {
-            selectedDate = dayText
+    private fun setEvent(date: String) {
 
-            val dayList = dayInMonthArray(selectedDate)
-            adapters.update(dayList)
+        binding.textRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.textRecyclerView.adapter = adapter
 
+        getEvent(date)
+
+    }
+
+    private fun getEvent(date: String) {
+
+        calendarViewModel.readDateData(date).observe(viewLifecycleOwner) {
+            adapter.setData(it)
         }
+
     }
 
 }
