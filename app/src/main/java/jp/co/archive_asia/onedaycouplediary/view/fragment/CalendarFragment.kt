@@ -1,25 +1,25 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
 import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
+import java.time.format.DateTimeFormatter
 
-class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar) {
+class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar),
+    CalendarAdapter.OnItemListener {
 
-    lateinit var selectedDate: LocalDate
     private val adapter: WriteAdapter by lazy { WriteAdapter(calendarViewModel) }
     private val calendarViewModel: CalendarViewModel by viewModels {
         CalendarViewModelFactory(
@@ -27,91 +27,87 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         )
     }
 
+    private var dayList = dayInMonthArray(selectedDate)
+    private val adapters = CalendarAdapter(dayList, this)
+
+    var date = selectedDate.toString()
+
     override fun initView() {
         super.initView()
-
-        //現在日
-        selectedDate = LocalDate.now()
 
         //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+            binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
         //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+            binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
         binding.dialogButton.setOnClickListener {
             findNavController().navigate(R.id.action_calendarFragment_to_writeFragment)
+
         }
-
-        binding.textRecyclerView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding.textRecyclerView.adapter = adapter
-
-        calendarViewModel.getAllData.observe(viewLifecycleOwner, Observer {
-            adapter.setData(it)
-        })
 
         setMonthView()
 
     }
 
+    override fun onItemClick(position: Int, dayText: LocalDate?) {
+
+        if (dayText != null) {
+            selectedDate = dayText
+
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList)
+
+        }
+
+        binding.textDate.text =
+            selectedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+
+        setEvent(selectedDate.toString())
+    }
+
     private fun setMonthView() {
+
         // 年月 textview
         binding.monthYearText.text = monthYearFromDate(selectedDate)
 
-        // 日、生まれる
-        val dayList = dayInMonthArray(selectedDate)
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 7)
 
-        val adapter = CalendarAdapter(dayList)
+        binding.recyclerView.adapter = adapters
 
-        val manager: RecyclerView.LayoutManager = GridLayoutManager(context, 7)
+        setEvent(selectedDate.toString())
 
-        binding.recyclerView.layoutManager = manager
 
-        binding.recyclerView.adapter = adapter
     }
 
-    private fun monthYearFromDate(date: LocalDate): String {
+    private fun setEvent(date: String) {
 
-        val formatter = DateTimeFormatter.ofPattern("yyyy年 MM月")
+        binding.textRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.textRecyclerView.adapter = adapter
 
-        //受け取った日付を該当formatに変更
-        return date.format(formatter)
+        getEvent(date)
+
     }
 
-    private fun dayInMonthArray(date: LocalDate): ArrayList<LocalDate?> {
+    private fun getEvent(date: String) {
 
-        val dayList = ArrayList<LocalDate?>()
+        calendarViewModel.readDateData(date)
 
-        val yearMonth = YearMonth.from(date)
-
-        // 月の最後の日付を持ってくる。
-        val lastDay = yearMonth.lengthOfMonth()
-
-        // 月の最前の日付を持ってくる。
-        val firstDay = selectedDate.withDayOfMonth(1)
-
-        // 初日の日を持ってくる。
-        val dayOfweek = firstDay.dayOfWeek.value
-
-        for (i in 1..41) {
-            if (i <= dayOfweek || i > (lastDay + dayOfweek)) {
-                dayList.add(null)
-            } else {
-                // LocalDate
-                dayList.add(
-                    LocalDate.of(
-                        selectedDate.year,
-                        selectedDate.month, i - dayOfweek
-                    )
-                )
-            }
+        calendarViewModel.currentData.observe(viewLifecycleOwner) { date ->
+            adapter.setData(date)
         }
-        return dayList
+
     }
 
 }

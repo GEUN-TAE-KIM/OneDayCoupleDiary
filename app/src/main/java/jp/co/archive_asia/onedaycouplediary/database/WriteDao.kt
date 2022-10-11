@@ -7,13 +7,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WriteDao {
 
-    @Query("SELECT * FROM Write ORDER BY id ASC")
+    @Query("SELECT * FROM Write ORDER BY date DESC, id DESC")
     fun getAllData(): Flow<List<Write>>
 
     @Query("SELECT * FROM Write WHERE title LIKE :searchQuery OR content LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): Flow<List<Write>>
 
-    // OnConflictStrategy.IGNORE = 동일 id 충돌 무시
+    @Query("SELECT * FROM Write WHERE date = :date ORDER BY id DESC")
+    suspend fun readDateData(date: String): List<Write>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addData(write: Write)
 
@@ -22,6 +24,5 @@ interface WriteDao {
 
     @Delete
     suspend fun deleteData(write: Write)
-
 
 }
