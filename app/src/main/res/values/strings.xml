@@ -13,4 +13,7 @@
     <string name="friday">金</string>
     <string name="Saturday">土</string>
     <string name="write">Write</string>
+    <string name="inside">Inside</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
 </resources>

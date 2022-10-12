@@ -57,6 +57,9 @@
             android:id="@+id/action_calendarFragment_to_writeFragment"
             app:destination="@id/writeFragment"
             app:enterAnim="@anim/from_bottom" />
+        <action
+            android:id="@+id/action_calendarFragment_to_writeInsideFragment"
+            app:destination="@id/writeInsideFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeFragment"
@@ -66,6 +69,14 @@
         <action
             android:id="@+id/action_writeFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/writeInsideFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteInsideFragment"
+        android:label="WriteInsideFragment" >
+        <argument
+            android:name="currentItem"
+            app:argType="jp.co.archive_asia.onedaycouplediary.model.Write" />
     </fragment>
 
 
