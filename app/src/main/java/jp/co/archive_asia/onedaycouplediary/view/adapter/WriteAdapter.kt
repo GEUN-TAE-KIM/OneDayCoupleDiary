@@ -1,10 +1,17 @@
 package jp.co.archive_asia.onedaycouplediary.view.adapter
 
+import android.app.DirectAction
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.ItemWriteListBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
+import jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment
+import jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragmentDirections
+import jp.co.archive_asia.onedaycouplediary.view.fragment.DiaryFragment
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 
 class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
@@ -34,6 +41,10 @@ class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(writeList[position], calendarViewModel)
+        holder.itemView.setOnClickListener {
+            val action = CalendarFragmentDirections.actionCalendarFragmentToWriteInsideFragment(writeList[position])
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
