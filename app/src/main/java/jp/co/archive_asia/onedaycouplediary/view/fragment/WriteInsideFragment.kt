@@ -15,7 +15,6 @@ import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteInsideBindi
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.WriteUtils
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 
@@ -38,8 +37,10 @@ class WriteInsideFragment :
         binding.contentArea.setText(args.currentItem.content)
         binding.textDate.text = args.currentItem.date
 
-        val menuHost : MenuHost = requireActivity()
+        val menuHost: MenuHost = requireActivity()
+
         menuHost.addMenuProvider(object : MenuProvider {
+
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.write_inside_frament_menu, menu)
             }
@@ -47,6 +48,7 @@ class WriteInsideFragment :
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.menu_update -> {
+
                         updateItem()
 
                         return true
@@ -58,31 +60,36 @@ class WriteInsideFragment :
                 return true
             }
 
-        },viewLifecycleOwner,Lifecycle.State.RESUMED)
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
     }
 
     private fun updateItem() {
 
-       val title = binding.titleArea.text.toString()
-       val content = binding.contentArea.text.toString()
-       val date = binding.textDate.text.toString()
+        val title = binding.titleArea.text.toString()
+        val content = binding.contentArea.text.toString()
+        val date = binding.textDate.text.toString()
 
-       val validation = WriteUtils.verifyData(title, content)
+        val validation = WriteUtils.verifyData(title, content)
 
-       if (validation) {
-           val updatedItem = Write(
-               args.currentItem.id,
-               title,
-               content,
-               date
-           )
-           diaryViewModel.updateData(updatedItem)
-           Toast.makeText(requireContext(),"update",Toast.LENGTH_SHORT).show()
-           findNavController().popBackStack()
-       }else{
-           Toast.makeText(requireContext(),"update null",Toast.LENGTH_SHORT).show()
-       }
+        if (validation) {
+
+            val updatedItem = Write(
+                args.currentItem.id,
+                title,
+                content,
+                date
+            )
+
+            diaryViewModel.updateData(updatedItem)
+
+            Toast.makeText(requireContext(), "update", Toast.LENGTH_SHORT).show()
+
+            findNavController().popBackStack()
+
+        } else {
+            Toast.makeText(requireContext(), "update null", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

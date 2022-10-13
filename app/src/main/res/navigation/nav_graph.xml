@@ -9,7 +9,7 @@
         android:id="@+id/splashFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_introFragment"
             app:destination="@id/introFragment"
@@ -21,7 +21,7 @@
         android:id="@+id/introFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.IntroFragment"
         android:label="IntroFragment"
-        tools:layout="@layout/fragment_intro" >
+        tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_introFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -40,7 +40,7 @@
         android:id="@+id/loginFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_calendarFragment"
             app:destination="@id/calendarFragment"
@@ -52,7 +52,7 @@
         android:id="@+id/calendarFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment"
         android:label="CalendarFragment"
-        tools:layout="@layout/fragment_calendar" >
+        tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_writeFragment"
             app:destination="@id/writeFragment"
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/writeInsideFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteInsideFragment"
-        android:label="WriteInsideFragment" >
+        android:label="WriteInsideFragment">
         <argument
             android:name="currentItem"
             app:argType="jp.co.archive_asia.onedaycouplediary.model.Write" />
