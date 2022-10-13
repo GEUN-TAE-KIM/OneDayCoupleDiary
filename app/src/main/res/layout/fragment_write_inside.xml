@@ -30,25 +30,27 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.5"/>
 
-        <TextView
+        <EditText
             android:id="@+id/titleArea"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_margin="20dp"
             android:background="@android:color/transparent"
+            android:text="title"
             android:hint="Title"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textDate"/>
 
-        <TextView
+        <EditText
             android:id="@+id/contentArea"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="20dp"
             android:background="@android:color/transparent"
             android:hint="Content"
+            android:text="content"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
