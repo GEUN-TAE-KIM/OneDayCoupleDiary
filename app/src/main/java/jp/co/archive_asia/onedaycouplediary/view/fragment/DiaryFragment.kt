@@ -1,6 +1,5 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,6 +8,7 @@ import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.WriteUtils
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.time.format.DateTimeFormatter
@@ -40,11 +40,21 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         val content = binding.contentArea.text.toString()
         var date = CalendarFragment().date
 
-        val newData = Write(0, title, content, date)
-        diaryViewModel.addData(newData)
-        Log.d("add", newData.toString())
-        Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
-        findNavController().popBackStack()
+        val validation = WriteUtils.verifyData(title, content)
+
+        if (validation) {
+
+            val newData = Write(0, title, content, date)
+
+            diaryViewModel.addData(newData)
+
+            Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
+
+            findNavController().popBackStack()
+
+        } else {
+            Toast.makeText(activity, "add null", Toast.LENGTH_SHORT).show()
+        }
 
     }
 

@@ -1,54 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.fragment.DiaryFragment">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/date"
-                android:textColor="@color/pink_100"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/titleArea"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:hint="@string/Title"
-                android:inputType="textPersonName" />
+                android:layout_height="match_parent"
+                tools:context=".view.fragment.DiaryFragment">
 
-            <EditText
-                android:id="@+id/contentArea"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="20dp"
-                android:background="@android:color/transparent"
-                android:hint="@string/Content" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <Button
-                android:id="@+id/writeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="40dp"
-                android:backgroundTint="@color/pink_300"
-                android:text="@string/input"
-                android:textColor="@color/white" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/date"
+                        android:textColor="@color/pink_100"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
+                    <EditText
+                        android:id="@+id/titleArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_margin="20dp"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/Title"
+                        android:inputType="textPersonName" />
+
+                    <EditText
+                        android:id="@+id/contentArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:hint="@string/Content"
+                        android:inputType="textMultiLine" />
+
+                    <Button
+                        android:id="@+id/writeBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="40dp"
+                        android:backgroundTint="@color/pink_300"
+                        android:text="@string/input"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

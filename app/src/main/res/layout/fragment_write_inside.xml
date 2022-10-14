@@ -10,51 +10,83 @@
             type="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteInsideFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.fragment.WriteInsideFragment">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/date"
-            android:textColor="@color/pink_100"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/titleArea"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="20dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/Title"
-            android:text="@string/title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textDate" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/contentArea"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/Content"
-            android:text="@string/content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleArea" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".view.fragment.WriteInsideFragment">
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/date"
+                    android:textColor="@color/pink_100"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/main_pink"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/titleArea" />
+
+                <EditText
+                    android:id="@+id/titleArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_margin="20dp"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/Title"
+                    android:text="@string/title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textDate" />
+
+                <EditText
+                    android:id="@+id/contentArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@android:color/transparent"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/Content"
+                    android:inputType="textMultiLine"
+                    android:text="@string/content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/titleArea" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/main_pink"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contentArea" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>
