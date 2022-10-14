@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/introFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/introFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.IntroFragment"
-        android:label="IntroFragment"
+        android:label="@string/Intro"
         tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_introFragment_to_loginFragment"
@@ -33,13 +33,13 @@
     <fragment
         android:id="@+id/joinFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.JoinFragment"
-        android:label="JoinFragment"
+        android:label="@string/Join"
         tools:layout="@layout/fragment_join" />
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.LoginFragment"
-        android:label="LoginFragment"
+        android:label="@string/Login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_calendarFragment"
@@ -51,7 +51,7 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment"
-        android:label="CalendarFragment"
+        android:label="@string/Calendar"
         tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_writeFragment"
@@ -64,7 +64,7 @@
     <fragment
         android:id="@+id/writeFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.DiaryFragment"
-        android:label="WriteFragment"
+        android:label="@string/write"
         tools:layout="@layout/fragment_write">
         <action
             android:id="@+id/action_writeFragment_to_calendarFragment"
@@ -73,10 +73,14 @@
     <fragment
         android:id="@+id/writeInsideFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteInsideFragment"
-        android:label="WriteInsideFragment">
+        android:label="@string/inside"
+        tools:layout="@layout/fragment_write_inside">
         <argument
             android:name="currentItem"
             app:argType="jp.co.archive_asia.onedaycouplediary.model.Write" />
+        <action
+            android:id="@+id/action_writeInsideFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
 
 

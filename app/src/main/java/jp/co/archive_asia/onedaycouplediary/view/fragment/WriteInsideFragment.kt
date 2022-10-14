@@ -61,6 +61,13 @@ class WriteInsideFragment :
 
                         return true
                     }
+                    // Appbar back 設定
+                    android.R.id.home -> {
+
+                        requireActivity().onBackPressed()
+
+                        return true
+                    }
                 }
                 return true
             }

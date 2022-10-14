@@ -16,4 +16,14 @@
     <string name="inside">Inside</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="title">title</string>
+    <string name="content">content</string>
+    <string name="Calendar">Calendar</string>
+    <string name="Login">Login</string>
+    <string name="Join">Join</string>
+    <string name="Intro">Intro</string>
+    <string name="input">Input</string>
+    <string name="Content">Content</string>
+    <string name="Title">Title</string>
+    <string name="date">date</string>
 </resources>
