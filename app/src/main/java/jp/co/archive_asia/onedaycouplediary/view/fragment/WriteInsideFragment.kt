@@ -1,5 +1,7 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -54,6 +56,9 @@ class WriteInsideFragment :
                         return true
                     }
                     R.id.menu_delete -> {
+
+                        deleteItem()
+
                         return true
                     }
                 }
@@ -90,6 +95,24 @@ class WriteInsideFragment :
         } else {
             Toast.makeText(requireContext(), "update null", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun deleteItem() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _ ->
+            diaryViewModel.deleteData(args.currentItem)
+            Toast.makeText(
+                requireContext(),
+                "Delete Success: ${args.currentItem.title}",
+                Toast.LENGTH_SHORT
+            ).show()
+            findNavController().popBackStack()
+        }
+        builder.setNegativeButton("No") { _, _ -> }
+        builder.setTitle("Delete '${args.currentItem.title}'?")
+        builder.setMessage("remove? '${args.currentItem.title}'?")
+        builder.create().show()
     }
 
 }
