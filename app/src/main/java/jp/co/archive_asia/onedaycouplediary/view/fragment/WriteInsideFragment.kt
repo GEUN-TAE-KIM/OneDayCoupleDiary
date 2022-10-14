@@ -1,7 +1,6 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
