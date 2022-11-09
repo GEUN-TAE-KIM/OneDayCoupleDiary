@@ -3,14 +3,11 @@ package jp.co.archive_asia.onedaycouplediary.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
+import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.*
-import kotlin.collections.ArrayList
 
 class CalendarAdapter(
     private var dayList: ArrayList<LocalDate?>,
@@ -23,32 +20,33 @@ class CalendarAdapter(
     }
 
     class ItemViewHolder(
-        itemView: View,
+        private val binding: ItemCalendarBinding,
         private val onItemListener: OnItemListener,
         private val days: ArrayList<LocalDate?>
     ) :
 
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        val dayText: TextView
+        fun bind(date: String) {
+            binding.dayText.text = date
+        }
 
         override fun onClick(view: View) {
             onItemListener.onItemClick(adapterPosition, days[adapterPosition])
         }
 
         init {
-            dayText = itemView.findViewById(R.id.dayText)
             itemView.setOnClickListener(this)
-
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_calendar, parent, false)
 
-        return ItemViewHolder(view, onItemListener, dayList)
+        val binding =
+            ItemCalendarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ItemViewHolder(binding, onItemListener, dayList)
+
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -57,10 +55,11 @@ class CalendarAdapter(
         val day: LocalDate? = dayList[position]
 
         if (day == null) {
-            holder.dayText.text = ""
+            holder.bind(date = "")
+
         } else {
             //該当する日を入る
-            holder.dayText.text = day.dayOfMonth.toString()
+            holder.bind(date = day.dayOfMonth.toString())
 
             if (day == CalendarUtils.selectedDate) {
                 holder.itemView.setBackgroundResource(R.color.pink_300)
