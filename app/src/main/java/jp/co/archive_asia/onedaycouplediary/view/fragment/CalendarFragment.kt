@@ -2,19 +2,19 @@ package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.CalendarAdapter
-import java.time.LocalDate
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar),

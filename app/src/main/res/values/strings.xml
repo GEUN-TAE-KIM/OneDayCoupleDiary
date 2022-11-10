@@ -26,4 +26,6 @@
     <string name="Content">Content</string>
     <string name="Title">Title</string>
     <string name="date">date</string>
+    <string name="click_on_date">Click on date</string>
+    <string name="_1">1</string>
 </resources>

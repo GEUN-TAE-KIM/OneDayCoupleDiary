@@ -11,29 +11,6 @@ abstract class WriteDatabase : RoomDatabase() {
 
     abstract fun writeDao(): WriteDao
 
-    /*companion object {
-
-        @Volatile
-        private var INSTANCE: WriteDatabase? = null
-
-        fun getDatabase(context: Context): WriteDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    WriteDatabase::class.java,
-                    "write_database"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }*/
-
     companion object {
         @Volatile
         private var INSTANCE: WriteDatabase? = null
