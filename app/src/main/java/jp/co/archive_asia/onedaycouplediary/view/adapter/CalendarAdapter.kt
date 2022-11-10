@@ -1,5 +1,6 @@
 package jp.co.archive_asia.onedaycouplediary.view.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.WriteUtils
 import java.time.LocalDate
 
 class CalendarAdapter(
@@ -64,6 +66,7 @@ class CalendarAdapter(
             if (day == CalendarUtils.selectedDate) {
                 holder.itemView.setBackgroundResource(R.color.pink_300)
             }
+
         }
     }
 
@@ -74,6 +77,12 @@ class CalendarAdapter(
     fun update(dayList: ArrayList<LocalDate?>) {
         this.dayList = dayList
         notifyDataSetChanged()
+        //notifyItemRangeChanged(0,40)
+
+    }
+
+    fun deco(color: Color) {
+
 
     }
 
