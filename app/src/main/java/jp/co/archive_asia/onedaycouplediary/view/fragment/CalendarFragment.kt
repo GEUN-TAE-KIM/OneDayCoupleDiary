@@ -59,7 +59,6 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         }
 
         setMonthView()
-        colorSelect()
 
     }
 
@@ -90,14 +89,6 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         setEvent(selectedDate.toString())
 
-        // 데이터가 있을때 색상을 표시하는 것 음
-        // 레이아웃으로 30까지의 레이아웃을 만들고 데이터가 채워질때 레이아웃을 끌어와서 만든것을 표시하게 하는 것
-        // 어떻게 끌어와서 표시?
-        //
-        // 아니면 캘린더 어댑터에 체크박스 표시되는 것 이거는 어댑터를 합쳐야 겠지?
-        // 근데 어댑터를 합치는데 내가 쓰고 싶은 것만 쓸수가 있나? write어댑터에 뷰모델의 저장되어 있는 데이터를 끌어와서
-        // 캘린더 어댑터에 뷰홀더에 색상 표시하고 여기 프래그먼트에 데이터를 나타내기
-
     }
 
     private fun setEvent(date: String) {
@@ -118,16 +109,4 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             adapter.setData(date)
         }
     }
-
-    private fun colorSelect() {
-
-        val isSelected = binding.recyclerView.layoutManager
-        val mPointPaint = Paint()
-        if (isSelected == null) {
-            mPointPaint.color = Color.BLACK
-        } else {
-            mPointPaint.color = Color.BLUE
-        }
-    }
-
 }
