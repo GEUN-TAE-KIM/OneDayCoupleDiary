@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
@@ -17,6 +18,9 @@ class CalendarAdapter(
     private val onItemListener: OnItemListener
 ) :
     RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
+
+    private lateinit var binding: ItemCalendarBinding
+    // private var writeList : List<Write> = java.util.ArrayList<Write>()
 
     interface OnItemListener {
         fun onItemClick(position: Int, dayText: LocalDate?)
@@ -32,6 +36,8 @@ class CalendarAdapter(
 
         fun bind(date: String) {
             binding.dayText.text = date
+            binding.dayCheck.drawable
+            binding.executePendingBindings()
         }
 
         override fun onClick(view: View) {
@@ -42,17 +48,17 @@ class CalendarAdapter(
             itemView.setOnClickListener(this)
         }
 
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-
-        val binding =
-            ItemCalendarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ItemCalendarBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding, onItemListener, dayList)
-
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+
+        // binding.write = writeList[position]
 
         // 日を入る
         val day: LocalDate? = dayList[position]
@@ -69,6 +75,7 @@ class CalendarAdapter(
             }
 
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -81,15 +88,5 @@ class CalendarAdapter(
         //notifyItemRangeChanged(0,40)
 
     }
-
 }
 
-@BindingAdapter("Check")
-fun setReadCheck(imgView: ImageView, calDay: Write?) {
-    val today = LocalDate.now().dayOfMonth
-    if (calDay != null) {
-        imgView.visibility = View.VISIBLE
-        if (today == calDay.title.toInt()) imgView.setBackgroundResource(R.drawable.ic_baseline_fiber_manual_record_24)
-
-    }
-}

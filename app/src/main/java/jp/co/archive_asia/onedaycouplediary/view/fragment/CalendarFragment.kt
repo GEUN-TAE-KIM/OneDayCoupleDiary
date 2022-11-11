@@ -1,7 +1,5 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.graphics.Color
-import android.graphics.Paint
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
