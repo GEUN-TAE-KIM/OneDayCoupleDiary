@@ -1,8 +1,11 @@
 package jp.co.archive_asia.onedaycouplediary.view.util
 
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 object CalendarUtils {
 
@@ -47,4 +50,9 @@ object CalendarUtils {
         return date.format(formatter)
     }
 
+}
+
+fun String.toDate(pattern: String = "yyyy/MM/dd"): Date? {
+    val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+    return dateFormat.parse(this)
 }

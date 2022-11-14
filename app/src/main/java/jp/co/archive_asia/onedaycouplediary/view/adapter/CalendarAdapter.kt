@@ -11,15 +11,22 @@ import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
+import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CalendarAdapter(
     private var dayList: ArrayList<LocalDate?>,
+    private var writeList: List<Write>? = null,
     private val onItemListener: OnItemListener
 ) :
     RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
 
     private lateinit var binding: ItemCalendarBinding
+    val calOnClickItem : (calDay : Write) -> Unit = {}
     // private var writeList : List<Write> = java.util.ArrayList<Write>()
 
     interface OnItemListener {
@@ -34,10 +41,10 @@ class CalendarAdapter(
 
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        fun bind(date: String) {
+        fun bind(date: String, write: Write?) {
             binding.dayText.text = date
-            binding.dayCheck.drawable
-            binding.executePendingBindings()
+            binding.write = write
+            //binding.executePendingBindings()
         }
 
         override fun onClick(view: View) {
@@ -62,13 +69,18 @@ class CalendarAdapter(
 
         // 日を入る
         val day: LocalDate? = dayList[position]
+        val yyyyMMdd = day?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val write = writeList?.find {
+            dateFormat.format(it.date) == yyyyMMdd
+        }
 
         if (day == null) {
-            holder.bind(date = "")
+            holder.bind(date = "", write)
 
         } else {
             //該当する日を入る
-            holder.bind(date = day.dayOfMonth.toString())
+            holder.bind(date = day.dayOfMonth.toString(), write)
 
             if (day == CalendarUtils.selectedDate) {
                 holder.itemView.setBackgroundResource(R.color.pink_300)
@@ -82,11 +94,16 @@ class CalendarAdapter(
         return dayList.size
     }
 
-    fun update(dayList: ArrayList<LocalDate?>) {
+    fun update(dayList: ArrayList<LocalDate?>, writeList: List<Write>? = null) {
         this.dayList = dayList
+        this.writeList = writeList
         notifyDataSetChanged()
         //notifyItemRangeChanged(0,40)
 
+    }
+
+    fun changeSelectedCell() {
+        notifyDataSetChanged()
     }
 }
 

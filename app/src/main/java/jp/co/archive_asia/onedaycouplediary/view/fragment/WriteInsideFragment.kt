@@ -18,6 +18,8 @@ import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.WriteUtils
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WriteInsideFragment :
     BaseFragment<FragmentWriteInsideBinding>(R.layout.fragment_write_inside) {
@@ -36,7 +38,11 @@ class WriteInsideFragment :
 
         binding.titleArea.setText(args.currentItem.title)
         binding.contentArea.setText(args.currentItem.content)
-        binding.textDate.text = args.currentItem.date
+        // 2022/11/03
+
+        val pattern = "yyyy/MM/dd"
+        val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        binding.textDate.text = dateFormat.format(args.currentItem.date)
 
         val menuHost: MenuHost = requireActivity()
 
@@ -79,7 +85,10 @@ class WriteInsideFragment :
 
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
-        val date = binding.textDate.text.toString()
+        val dateString = binding.textDate.text.toString()
+
+        val pattern = "yyyy/MM/dd"
+        val date = SimpleDateFormat(pattern, Locale.getDefault()).parse(dateString)
 
         val validation = WriteUtils.verifyData(title, content)
 
@@ -89,7 +98,7 @@ class WriteInsideFragment :
                 args.currentItem.id,
                 title,
                 content,
-                date
+                date.time
             )
 
             diaryViewModel.updateData(updatedItem)
