@@ -1,11 +1,13 @@
 package jp.co.archive_asia.onedaycouplediary.view.util
 
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 object CalendarUtils {
-
+    // 22-11-15
     var selectedDate = LocalDate.now()!!
 
     fun dayInMonthArray(date: LocalDate?): ArrayList<LocalDate?> {
@@ -48,3 +50,19 @@ object CalendarUtils {
     }
 
 }
+
+// string -> date
+fun String.toDate(pattern: String = "yyyy-MM-dd"): Date? {
+    val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+    return dateFormat.parse(this)
+}
+
+// date -> string
+fun Date.dateToString(format: String, local: Locale = Locale.getDefault()): String {
+    val formatter = SimpleDateFormat(format, local)
+    return formatter.format(this)
+}
+
+
+
+

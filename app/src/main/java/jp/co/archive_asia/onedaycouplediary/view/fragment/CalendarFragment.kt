@@ -28,26 +28,28 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
     }
 
     private var dayList = dayInMonthArray(selectedDate)
-    private val adapters = CalendarAdapter(dayList, this)
+    private val adapters = CalendarAdapter(dayList, onItemListener = this)
 
     var date = selectedDate.toString()
 
     override fun initView() {
         super.initView()
 
+        binding.textRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.textRecyclerView.adapter = adapter
+
         //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
-            val dayList = dayInMonthArray(selectedDate)
-            adapters.update(dayList)
+            calendarViewModel.selectDateData(selectedDate)
             binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
         //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
-            val dayList = dayInMonthArray(selectedDate)
-            adapters.update(dayList)
+            calendarViewModel.selectDateData(selectedDate)
             binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
@@ -56,28 +58,36 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         }
 
+        binding.textDate.text =
+            selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
         setMonthView()
 
+    }
+
+    override fun initObservers() {
+        calendarViewModel.currentData.observe(viewLifecycleOwner) { monthlyDiary ->
+            val dayList = dayInMonthArray(selectedDate)
+            adapters.update(dayList, monthlyDiary)
+            adapter.setData(monthlyDiary)
+        }
     }
 
     override fun onItemClick(position: Int, dayText: LocalDate?) {
 
         if (dayText != null) {
             selectedDate = dayText
-
-            val dayList = dayInMonthArray(selectedDate)
-            adapters.update(dayList)
+            adapters.changeSelectedCell()
 
         }
 
         binding.textDate.text =
-            selectedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+            selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
-        setEvent(selectedDate.toString())
+        getEvent(selectedDate.toString())
     }
 
     private fun setMonthView() {
-
         // 年月 textview
         binding.monthYearText.text = monthYearFromDate(selectedDate)
 
@@ -85,29 +95,12 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         binding.recyclerView.adapter = adapters
 
-        setEvent(selectedDate.toString())
-
-
-    }
-
-    private fun setEvent(date: String) {
-
-        binding.textRecyclerView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding.textRecyclerView.adapter = adapter
-
-        getEvent(date)
+        calendarViewModel.selectDateData(selectedDate)
 
     }
 
     private fun getEvent(date: String) {
-
-        calendarViewModel.readDateData(date)
-
-        calendarViewModel.currentData.observe(viewLifecycleOwner) { date ->
-            adapter.setData(date)
-        }
+        adapter.update(date)
 
     }
-
 }
