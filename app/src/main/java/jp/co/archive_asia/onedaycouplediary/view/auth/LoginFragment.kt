@@ -9,6 +9,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     override fun initView() {
         super.initView()
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
         }

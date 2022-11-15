@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="write"
-            type="jp.co.archive_asia.onedaycouplediary.model.Write" />
+            name="diary"
+            type="jp.co.archive_asia.onedaycouplediary.model.Diary" />
 
     </data>
 
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="@{write.title}"
+            android:text="@{diary.title}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="@{write.content}"
+            android:text="@{diary.content}"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

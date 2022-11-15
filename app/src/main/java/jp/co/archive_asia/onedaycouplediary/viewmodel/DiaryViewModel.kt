@@ -5,36 +5,36 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import jp.co.archive_asia.onedaycouplediary.database.WriteDatabase
-import jp.co.archive_asia.onedaycouplediary.model.Write
-import jp.co.archive_asia.onedaycouplediary.repository.WriteRepository
+import jp.co.archive_asia.onedaycouplediary.database.DiaryDatabase
+import jp.co.archive_asia.onedaycouplediary.model.Diary
+import jp.co.archive_asia.onedaycouplediary.repository.DiaryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DiaryViewModel(application: Activity) : ViewModel() {
 
-    private val writeDao = WriteDatabase.getDatabase(application).writeDao()
-    private val repository: WriteRepository = WriteRepository(writeDao)
+    private val writeDao = DiaryDatabase.getDatabase(application).writeDao()
+    private val repository: DiaryRepository = DiaryRepository(writeDao)
 
-    fun addData(write: Write) {
+    fun addData(diary: Diary) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addData(write)
+            repository.addData(diary)
         }
     }
 
-    fun updateData(write: Write) {
+    fun updateData(diary: Diary) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateData(write)
+            repository.updateData(diary)
         }
     }
 
-    fun deleteData(write: Write) {
+    fun deleteData(diary: Diary) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteData(write)
+            repository.deleteData(diary)
         }
     }
 
-    fun searchDatabase(searchQuery: String): LiveData<List<Write>> {
+    fun searchDatabase(searchQuery: String): LiveData<List<Diary>> {
         return repository.searchDatabase(searchQuery).asLiveData()
     }
 

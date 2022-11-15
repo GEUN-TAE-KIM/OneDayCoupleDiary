@@ -4,6 +4,7 @@ import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentIntroBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.view.util.addFinishAppBackButtonCallback
 
 class IntroFragment : BaseFragment<FragmentIntroBinding>(R.layout.fragment_intro) {
 
@@ -17,6 +18,8 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>(R.layout.fragment_intro
         binding.joinBtn.setOnClickListener {
             findNavController().navigate(R.id.action_introFragment_to_joinFragment)
         }
+
+        addFinishAppBackButtonCallback()
     }
 
 }
