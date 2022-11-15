@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/introFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.IntroFragment"
-        android:label="@string/Intro"
+        android:label="@string/intro"
         tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_introFragment_to_loginFragment"
@@ -33,51 +33,57 @@
     <fragment
         android:id="@+id/joinFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.JoinFragment"
-        android:label="@string/Join"
-        tools:layout="@layout/fragment_join" />
+        android:label="@string/join"
+        tools:layout="@layout/fragment_join" >
+        <action
+            android:id="@+id/action_joinFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:popUpTo="@id/introFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.auth.LoginFragment"
-        android:label="@string/Login"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_calendarFragment"
             app:destination="@id/calendarFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/introFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/calendarFragment"
         android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment"
-        android:label="@string/Calendar"
+        android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_writeFragment"
-            app:destination="@id/writeFragment"
+            app:destination="@id/writeDiaryFragment"
             app:enterAnim="@anim/from_bottom" />
         <action
-            android:id="@+id/action_calendarFragment_to_writeInsideFragment"
-            app:destination="@id/writeInsideFragment" />
+            android:id="@+id/action_calendarFragment_to_diaryFragment"
+            app:destination="@id/diaryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/writeFragment"
-        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.DiaryFragment"
-        android:label="@string/write"
-        tools:layout="@layout/fragment_write">
+        android:id="@+id/writeDiaryFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteDiaryFragment"
+        android:label="@string/diary"
+        tools:layout="@layout/fragment_write_diary">
         <action
-            android:id="@+id/action_writeFragment_to_calendarFragment"
+            android:id="@+id/action_writeDiaryFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
-        android:id="@+id/writeInsideFragment"
-        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.WriteInsideFragment"
-        android:label="@string/inside"
-        tools:layout="@layout/fragment_write_inside">
+        android:id="@+id/diaryFragment"
+        android:name="jp.co.archive_asia.onedaycouplediary.view.fragment.DiaryFragment"
+        android:label="@string/diary"
+        tools:layout="@layout/fragment_diary">
         <argument
             android:name="currentItem"
-            app:argType="jp.co.archive_asia.onedaycouplediary.model.Write" />
+            app:argType="jp.co.archive_asia.onedaycouplediary.model.Diary" />
         <action
             android:id="@+id/action_writeInsideFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />

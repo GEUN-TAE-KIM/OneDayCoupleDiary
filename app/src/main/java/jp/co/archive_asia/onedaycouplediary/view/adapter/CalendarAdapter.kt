@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
-import jp.co.archive_asia.onedaycouplediary.model.Write
+import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.dateToString
 import java.time.LocalDate
@@ -15,7 +15,7 @@ import java.util.*
 
 class CalendarAdapter(
     private var dayList: ArrayList<LocalDate?>,
-    private var writeList: List<Write>? = null,
+    private var diaryList: List<Diary>? = null,
     private val onItemListener: OnItemListener
 ) :
     RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
@@ -34,9 +34,9 @@ class CalendarAdapter(
 
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        fun bind(date: String, write: Write?) {
+        fun bind(date: String, diary: Diary?) {
             binding.dayText.text = date
-            binding.write = write
+            binding.write = diary
             binding.executePendingBindings()
         }
 
@@ -61,7 +61,7 @@ class CalendarAdapter(
         // 日を入る
         val day: LocalDate? = dayList[position]
         val yyyyMMdd = day?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        val write = writeList?.find {
+        val write = diaryList?.find {
             val date = Date(it.date)
             date.dateToString("yyyy-MM-dd") == yyyyMMdd
 
@@ -86,9 +86,9 @@ class CalendarAdapter(
         return dayList.size
     }
 
-    fun update(dayList: ArrayList<LocalDate?>, writeList: List<Write>? = null) {
+    fun update(dayList: ArrayList<LocalDate?>, diaryList: List<Diary>? = null) {
         this.dayList = dayList
-        this.writeList = writeList
+        this.diaryList = diaryList
         notifyDataSetChanged()
         //notifyItemRangeChanged(0,40)
 

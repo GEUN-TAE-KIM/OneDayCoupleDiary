@@ -12,7 +12,7 @@ import java.util.*
 
 @Entity
 @Parcelize
-data class Write(
+data class Diary(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

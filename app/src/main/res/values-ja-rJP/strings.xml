@@ -3,6 +3,17 @@
     <string name="app_name">OneDayCoupleDiary</string>
     <string name="forget_password_message">パスワードをお忘れですか？</string>
 
+    <string name="join">新規登録</string>
+    <string name="calendar">カレンダー</string>
+    <string name="diary">日記</string>
+    <string name="write">作成</string>
+    <string name="title">タイトル</string>
+    <string name="content">内容</string>
+
+    <string name="add">登録</string>
+    <string name="update">修正</string>
+    <string name="delete">削除</string>
+
     <string name="sunday">日</string>
     <string name="monday">月</string>
     <string name="tuesday">火</string>

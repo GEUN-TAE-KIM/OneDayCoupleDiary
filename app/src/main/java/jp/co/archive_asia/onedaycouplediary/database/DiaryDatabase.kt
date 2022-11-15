@@ -4,18 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import jp.co.archive_asia.onedaycouplediary.model.Write
+import jp.co.archive_asia.onedaycouplediary.model.Diary
 
-@Database(entities = [Write::class], version = 1, exportSchema = false)
-abstract class WriteDatabase : RoomDatabase() {
+@Database(entities = [Diary::class], version = 1, exportSchema = false)
+abstract class DiaryDatabase : RoomDatabase() {
 
-    abstract fun writeDao(): WriteDao
+    abstract fun writeDao(): DiaryDao
 
     companion object {
         @Volatile
-        private var INSTANCE: WriteDatabase? = null
+        private var INSTANCE: DiaryDatabase? = null
 
-        fun getDatabase(context: Context): WriteDatabase =
+        fun getDatabase(context: Context): DiaryDatabase =
             INSTANCE ?: synchronized(this) {
                 INSTANCE
                     ?: buildDatabase(context).also { INSTANCE = it }
@@ -24,7 +24,7 @@ abstract class WriteDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                WriteDatabase::class.java, "write_database"
+                DiaryDatabase::class.java, "write_database"
             ).build()
     }
 }

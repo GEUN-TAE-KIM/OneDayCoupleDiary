@@ -4,7 +4,19 @@
     <string name="login" translatable="false">Login</string>
     <string name="email" translatable="false">Email</string>
     <string name="password" translatable="false">Password</string>
+    <string name="intro" translatable="false">Intro</string>
     <string name="forget_password_message">Forget Password?</string>
+
+    <string name="join">Join</string>
+    <string name="calendar">Calendar</string>
+    <string name="diary">Dairy</string>
+    <string name="write">Write</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 
     <string name="sunday">SUN</string>
     <string name="monday">MON</string>

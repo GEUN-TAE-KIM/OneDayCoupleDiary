@@ -12,6 +12,7 @@ import jp.co.archive_asia.onedaycouplediary.view.adapter.WriteAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthArray
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
+import jp.co.archive_asia.onedaycouplediary.view.util.addFinishAppBackButtonCallback
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
 import java.time.LocalDate
@@ -62,6 +63,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         setMonthView()
+
+        addFinishAppBackButtonCallback()
 
     }
 

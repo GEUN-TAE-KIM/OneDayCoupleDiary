@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import jp.co.archive_asia.onedaycouplediary.database.WriteDatabase
-import jp.co.archive_asia.onedaycouplediary.model.Write
-import jp.co.archive_asia.onedaycouplediary.repository.WriteRepository
+import jp.co.archive_asia.onedaycouplediary.database.DiaryDatabase
+import jp.co.archive_asia.onedaycouplediary.model.Diary
+import jp.co.archive_asia.onedaycouplediary.repository.DiaryRepository
 import jp.co.archive_asia.onedaycouplediary.view.util.toDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,13 +17,13 @@ import java.time.format.DateTimeFormatter
 
 class CalendarViewModel(application: Activity) : ViewModel() {
 
-    private val writeDao = WriteDatabase.getDatabase(application).writeDao()
-    private val repository: WriteRepository = WriteRepository(writeDao)
+    private val writeDao = DiaryDatabase.getDatabase(application).writeDao()
+    private val repository: DiaryRepository = DiaryRepository(writeDao)
 
     // val getAllData: LiveData<List<Write>> = repository.getAllData.asLiveData()
 
-    private var _currentData = MutableLiveData<List<Write>>()
-    val currentData: LiveData<List<Write>> = _currentData
+    private var _currentData = MutableLiveData<List<Diary>>()
+    val currentData: LiveData<List<Diary>> = _currentData
 
     /*fun readDateData(date: String): LiveData<List<Write>> {
         viewModelScope.launch(Dispatchers.IO) {

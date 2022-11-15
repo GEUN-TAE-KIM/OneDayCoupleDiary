@@ -1,6 +1,7 @@
 package jp.co.archive_asia.onedaycouplediary
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -17,8 +18,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.container_main) as NavHostFragment
         navController = navHostFragment.navController
-
-        setupActionBarWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {

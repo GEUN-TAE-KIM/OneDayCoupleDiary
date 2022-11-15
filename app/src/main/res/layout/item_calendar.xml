@@ -7,7 +7,7 @@
 
         <variable
             name="write"
-            type="jp.co.archive_asia.onedaycouplediary.model.Write" />
+            type="jp.co.archive_asia.onedaycouplediary.model.Diary" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,12 +21,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="6dp"
-            android:text="@string/_1"
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
 
         <ImageView
             android:id="@+id/dayCheck"
