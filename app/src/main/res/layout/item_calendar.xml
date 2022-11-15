@@ -32,7 +32,6 @@
             android:id="@+id/dayCheck"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:background="@color/white"
             android:src="@drawable/ic_baseline_fiber_manual_record_24"
             android:visibility="invisible"
             app:Check="@{write}"

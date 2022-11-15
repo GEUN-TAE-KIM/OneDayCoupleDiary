@@ -7,8 +7,7 @@ import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
-import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
-import jp.co.archive_asia.onedaycouplediary.view.util.WriteUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.*
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
@@ -32,7 +31,7 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         }
 
         binding.textDate.text =
-            CalendarUtils.selectedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+            CalendarUtils.selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     }
 
@@ -47,7 +46,6 @@ class DiaryFragment : BaseFragment<FragmentWriteBinding>(R.layout.fragment_write
         if (validation) {
 
             // String -> Date -> Long
-
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateString).time
             val newData = Write(0, title, content, date)
 

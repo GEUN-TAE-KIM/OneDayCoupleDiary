@@ -3,20 +3,15 @@ package jp.co.archive_asia.onedaycouplediary.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
-import java.text.SimpleDateFormat
+import jp.co.archive_asia.onedaycouplediary.view.util.dateToString
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CalendarAdapter(
     private var dayList: ArrayList<LocalDate?>,
@@ -26,8 +21,6 @@ class CalendarAdapter(
     RecyclerView.Adapter<CalendarAdapter.ItemViewHolder>() {
 
     private lateinit var binding: ItemCalendarBinding
-    val calOnClickItem : (calDay : Write) -> Unit = {}
-    // private var writeList : List<Write> = java.util.ArrayList<Write>()
 
     interface OnItemListener {
         fun onItemClick(position: Int, dayText: LocalDate?)
@@ -44,7 +37,7 @@ class CalendarAdapter(
         fun bind(date: String, write: Write?) {
             binding.dayText.text = date
             binding.write = write
-            //binding.executePendingBindings()
+            binding.executePendingBindings()
         }
 
         override fun onClick(view: View) {
@@ -54,7 +47,6 @@ class CalendarAdapter(
         init {
             itemView.setOnClickListener(this)
         }
-
 
     }
 
@@ -66,13 +58,13 @@ class CalendarAdapter(
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         // binding.write = writeList[position]
-
         // 日を入る
         val day: LocalDate? = dayList[position]
-        val yyyyMMdd = day?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
-        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val yyyyMMdd = day?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val write = writeList?.find {
-            dateFormat.format(it.date) == yyyyMMdd
+            val date = Date(it.date)
+            date.dateToString("yyyy-MM-dd") == yyyyMMdd
+
         }
 
         if (day == null) {

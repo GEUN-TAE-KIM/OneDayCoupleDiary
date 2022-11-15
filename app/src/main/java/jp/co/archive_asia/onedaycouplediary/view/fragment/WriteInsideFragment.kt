@@ -16,6 +16,7 @@ import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteInsideBindi
 import jp.co.archive_asia.onedaycouplediary.model.Write
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.WriteUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.dateToString
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
@@ -38,9 +39,8 @@ class WriteInsideFragment :
 
         binding.titleArea.setText(args.currentItem.title)
         binding.contentArea.setText(args.currentItem.content)
-        // 2022/11/03
 
-        val pattern = "yyyy/MM/dd"
+        val pattern = "yyyy-MM-dd"
         val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
         binding.textDate.text = dateFormat.format(args.currentItem.date)
 
@@ -87,7 +87,7 @@ class WriteInsideFragment :
         val content = binding.contentArea.text.toString()
         val dateString = binding.textDate.text.toString()
 
-        val pattern = "yyyy/MM/dd"
+        val pattern = "yyyy-MM-dd"
         val date = SimpleDateFormat(pattern, Locale.getDefault()).parse(dateString)
 
         val validation = WriteUtils.verifyData(title, content)
@@ -98,7 +98,7 @@ class WriteInsideFragment :
                 args.currentItem.id,
                 title,
                 content,
-                date.time
+                date!!.time
             )
 
             diaryViewModel.updateData(updatedItem)

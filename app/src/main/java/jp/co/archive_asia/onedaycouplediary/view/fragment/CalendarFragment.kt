@@ -58,6 +58,9 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         }
 
+        binding.textDate.text =
+            selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
         setMonthView()
 
     }
@@ -79,7 +82,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         }
 
         binding.textDate.text =
-            selectedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+            selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         getEvent(selectedDate.toString())
     }
@@ -93,11 +96,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         binding.recyclerView.adapter = adapters
 
         calendarViewModel.selectDateData(selectedDate)
+
     }
 
     private fun getEvent(date: String) {
         adapter.update(date)
 
-//        calendarViewModel.readDateData(date)
     }
 }
