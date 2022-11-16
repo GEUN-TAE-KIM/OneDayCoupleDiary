@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "228482493268",
+    "project_id": "onedaycouplediary",
+    "storage_bucket": "onedaycouplediary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228482493268:android:b0bed91168c305d445b6c1",
+        "android_client_info": {
+          "package_name": "jp.co.archive_asia.onedaycouplediary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "228482493268-efaao80mg8ttm5fnu6fvmbbtp2leu3r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-3KEEDGt3mIzJeWQwRNUACYSC2_jHWzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "228482493268-efaao80mg8ttm5fnu6fvmbbtp2leu3r1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
