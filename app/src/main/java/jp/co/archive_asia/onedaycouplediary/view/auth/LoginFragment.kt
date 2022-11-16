@@ -61,10 +61,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     Log.d("로그인", "성공")
-                    val user = auth.currentUser
-                    updateUI(user)
+                    auth.currentUser
+
                 } else {
-                    updateUI(null)
+
                     Log.d("로그인", "실패")
                 }
 
@@ -103,10 +103,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
 
         return valid
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-
     }
 
     companion object {
