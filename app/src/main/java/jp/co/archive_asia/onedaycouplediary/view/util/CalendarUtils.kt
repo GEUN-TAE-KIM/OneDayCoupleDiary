@@ -50,7 +50,7 @@ object CalendarUtils {
     }
 
 }
-
+//TypeConverter
 // string -> date
 fun String.toDate(pattern: String = "yyyy-MM-dd"): Date? {
     val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())

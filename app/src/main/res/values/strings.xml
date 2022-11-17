@@ -25,4 +25,12 @@
     <string name="thursday">THU</string>
     <string name="friday">FRI</string>
     <string name="saturday">SAT</string>
+
+    <string-array name="color_select">
+        <item>MAIN_PINK</item>
+        <item>PINK_100</item>
+        <item>PINK_200</item>
+        <item>PINK_300</item>
+        <item>PINK_400</item>
+    </string-array>
 </resources>

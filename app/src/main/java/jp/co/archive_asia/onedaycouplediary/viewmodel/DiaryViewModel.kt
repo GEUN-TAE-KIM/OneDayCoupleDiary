@@ -1,10 +1,15 @@
 package jp.co.archive_asia.onedaycouplediary.viewmodel
 
 import android.app.Activity
+import android.view.View
+import android.widget.AdapterView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.database.DiaryDatabase
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.repository.DiaryRepository
@@ -36,6 +41,25 @@ class DiaryViewModel(application: Activity) : ViewModel() {
 
     fun searchDatabase(searchQuery: String): LiveData<List<Diary>> {
         return repository.searchDatabase(searchQuery).asLiveData()
+    }
+
+    val listener: AdapterView.OnItemSelectedListener = object :
+        AdapterView.OnItemSelectedListener{
+        override fun onNothingSelected(p0: AdapterView<*>?) {}
+        override fun onItemSelected(
+            parent: AdapterView<*>?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            when(position){
+                0 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.main_pink)) }
+                1 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_100)) }
+                2 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_200)) }
+                3 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_300)) }
+                4 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_400)) }
+            }
+        }
     }
 
 }

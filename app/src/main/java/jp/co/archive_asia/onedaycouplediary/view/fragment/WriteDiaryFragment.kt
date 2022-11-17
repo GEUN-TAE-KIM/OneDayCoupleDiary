@@ -1,6 +1,7 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
 import android.widget.Toast
+import androidx.core.graphics.toColor
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
@@ -34,6 +35,8 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
         binding.textDate.text =
             CalendarUtils.selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
+        binding.selectColor.onItemSelectedListener = diaryViewModel.listener
+
     }
 
     private fun addDataWrite() {
@@ -41,6 +44,7 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
         var dateString = CalendarFragment().date
+        val colorSelect = binding.selectColor.selectedItem.toString()
 
         val validation = DiaryUtils.verifyData(title, content)
 
@@ -48,7 +52,7 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
             // String -> Date -> Long
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateString).time
-            val newData = Diary(0, title, content, date)
+            val newData = Diary(0, title, content, date, DiaryUtils.parsePriority(colorSelect))
 
             diaryViewModel.addData(newData)
 

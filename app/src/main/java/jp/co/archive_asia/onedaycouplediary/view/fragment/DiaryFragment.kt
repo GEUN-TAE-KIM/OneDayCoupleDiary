@@ -37,6 +37,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
         binding.titleArea.setText(args.currentItem.title)
         binding.contentArea.setText(args.currentItem.content)
+        binding.selectColor.onItemSelectedListener = diaryViewModel.listener
 
         val pattern = "yyyy-MM-dd"
         val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
@@ -84,6 +85,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
         val dateString = binding.textDate.text.toString()
+        val colorSelect = binding.selectColor.selectedItem.toString()
 
         val pattern = "yyyy-MM-dd"
         val date = SimpleDateFormat(pattern, Locale.getDefault()).parse(dateString)
@@ -96,7 +98,8 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
                 args.currentItem.id,
                 title,
                 content,
-                date!!.time
+                date!!.time,
+                DiaryUtils.parsePriority(colorSelect)
             )
 
             diaryViewModel.updateData(updatedItem)
