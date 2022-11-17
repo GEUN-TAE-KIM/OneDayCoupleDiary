@@ -43,24 +43,34 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "성공")
+                    Toast.makeText(context, "SingUp: Success", Toast.LENGTH_SHORT).show()
+                    Log.d(SingUp, "Success")
                     auth.currentUser
                     findNavController().popBackStack()
                 } else {
-                    Log.w(TAG, "실패", task.exception)
-                    Toast.makeText(context, "형식이 안맞음", Toast.LENGTH_SHORT).show()
+                    Log.w(SingUp, "Failed", task.exception)
+                    Toast.makeText(context, "SingUp: Failed", Toast.LENGTH_SHORT).show()
+                }
+                if (email == email) {
+                    Toast.makeText(context, "同じメールがあるとか形式が違うです。", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "同じメールがある")
+                    binding.etEmail.error = "Required."
+
+                } else {
+                    binding.etEmail.error = null
                 }
 
             }
     }
 
+    // 앱에서 표시
     private fun validateForm(): Boolean {
         var valid = true
 
         val email = binding.etEmail.text.toString()
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(context, "이메일 입력", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "email入力", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "email入力 なし")
             binding.etEmail.error = "Required."
             valid = false
         } else {
@@ -69,7 +79,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         val password = binding.etPassword.text.toString()
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(context, "비번 입력", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "password 入力", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "password なし")
             binding.etPassword.error = "Required."
             valid = false
         } else {
@@ -77,8 +88,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
 
         if (password.length < 6) {
-            Toast.makeText(context, "최소 6자 이상 입력", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "最低6文字以上入力", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "password 6文字以上ない:${password.length}文字")
+            binding.etPassword.error = "Required."
             valid = false
+        } else {
+            binding.etPassword.error = null
         }
 
         return valid
@@ -86,6 +101,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
     companion object {
         private const val TAG = "EmailPassword"
+        private const val SingUp = "SingUp"
     }
 
 }

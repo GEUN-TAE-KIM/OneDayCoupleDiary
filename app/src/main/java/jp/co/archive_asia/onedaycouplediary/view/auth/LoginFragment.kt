@@ -59,14 +59,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "성공")
+                    Toast.makeText(context, "SignIn Success", Toast.LENGTH_SHORT).show()
+                    Log.d(SingIn, "Success")
                     auth.currentUser
                     findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
 
                 } else {
-                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "실패")
+                    Toast.makeText(context, "emailとか passwordが違う", Toast.LENGTH_SHORT).show()
+                    Log.d(SingIn, "Failed")
                 }
 
             }
@@ -75,21 +75,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private fun reload() {
         auth.currentUser!!.reload().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-
+                auth.currentUser
                 Toast.makeText(context, "Reload successful!", Toast.LENGTH_SHORT).show()
             } else {
                 Log.e(TAG, "reload", task.exception)
                 Toast.makeText(context, "Failed to reload user.", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 
+    // 앱에서 표시
     private fun validateForm(): Boolean {
         var valid = true
 
         val email = binding.etEmail.text.toString()
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(context, "이메일 입력", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "email入力", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "email入力 なし")
             binding.etEmail.error = "Required."
             valid = false
         } else {
@@ -98,7 +101,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         val password = binding.etPassword.text.toString()
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(context, "비번 입력", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "password 入力", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "password なし")
             binding.etPassword.error = "Required."
             valid = false
         } else {
@@ -110,5 +114,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     companion object {
         private const val TAG = "EmailPassword"
+        private const val SingIn = "SingIn"
+    }
+
+    fun getUid(): String {
+        auth = FirebaseAuth.getInstance()
+
+        return auth.currentUser?.uid.toString()
     }
 }
