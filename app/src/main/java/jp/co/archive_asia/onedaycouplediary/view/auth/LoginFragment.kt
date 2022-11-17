@@ -13,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentLoginBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
@@ -32,8 +33,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
             signIn(email, password)
 
-            findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
-
         }
 
         auth = Firebase.auth
@@ -45,7 +44,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         super.onStart()
 
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             reload()
         }
     }
@@ -60,12 +59,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Log.d("로그인", "성공")
+                    Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "성공")
                     auth.currentUser
+                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
 
                 } else {
-
-                    Log.d("로그인", "실패")
+                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "실패")
                 }
 
             }
@@ -88,6 +89,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         val email = binding.etEmail.text.toString()
         if (TextUtils.isEmpty(email)) {
+            Toast.makeText(context, "이메일 입력", Toast.LENGTH_SHORT).show()
             binding.etEmail.error = "Required."
             valid = false
         } else {
@@ -96,6 +98,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         val password = binding.etPassword.text.toString()
         if (TextUtils.isEmpty(password)) {
+            Toast.makeText(context, "비번 입력", Toast.LENGTH_SHORT).show()
             binding.etPassword.error = "Required."
             valid = false
         } else {
