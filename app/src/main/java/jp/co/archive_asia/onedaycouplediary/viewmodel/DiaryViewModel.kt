@@ -3,6 +3,7 @@ package jp.co.archive_asia.onedaycouplediary.viewmodel
 import android.app.Activity
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -58,6 +59,8 @@ class DiaryViewModel(application: Activity) : ViewModel() {
                 2 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_200)) }
                 3 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_300)) }
                 4 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_400)) }
+                /*0 -> {(parent?.getChildAt(0) as ImageView).setImageDrawable(ContextCompat.getDrawable(application, R.drawable.ic_baseline_fiber_manual_record_24))}
+*/
             }
         }
     }

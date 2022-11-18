@@ -30,6 +30,7 @@
         <entry key="app/src/main/res/layout/fragment_write_inside.xml" value="0.271875" />
         <entry key="app/src/main/res/layout/item_calendar.xml" value="0.2324074074074074" />
         <entry key="app/src/main/res/layout/item_diary_list.xml" value="0.2703125" />
+        <entry key="app/src/main/res/layout/item_spinner.xml" value="0.26927083333333335" />
         <entry key="app/src/main/res/layout/item_write_list.xml" value="0.2324074074074074" />
         <entry key="app/src/main/res/layout/layout_dialog.xml" value="0.2713541666666667" />
         <entry key="app/src/main/res/layout/write_item.xml" value="0.2713541666666667" />
