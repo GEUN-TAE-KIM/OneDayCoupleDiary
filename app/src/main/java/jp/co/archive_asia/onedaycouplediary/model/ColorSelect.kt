@@ -7,3 +7,8 @@ enum class ColorSelect {
     PINK_300,
     PINK_400
 }
+
+enum class ColorSelect2 (
+    val color_image: Int,
+    val color_name: String
+)

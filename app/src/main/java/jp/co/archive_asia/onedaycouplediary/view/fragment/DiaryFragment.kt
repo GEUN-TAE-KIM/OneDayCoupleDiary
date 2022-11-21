@@ -4,24 +4,36 @@ import android.app.AlertDialog
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import jp.co.archive_asia.onedaycouplediary.MainActivity
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentDiaryBinding
+import jp.co.archive_asia.onedaycouplediary.model.ColorSelect
+import jp.co.archive_asia.onedaycouplediary.model.ColorSpinner
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary) {
+
+    private lateinit var spinnerAdapterColor: SpinnerAdapter
+    private val listOfYear = ArrayList<ColorSpinner>()
+
+    lateinit var mainActivity: MainActivity
 
     private val diaryViewModel: DiaryViewModel by viewModels {
         DiaryViewModelFactory(
@@ -37,7 +49,9 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
         binding.titleArea.setText(args.currentItem.title)
         binding.contentArea.setText(args.currentItem.content)
-        binding.selectColor.onItemSelectedListener = diaryViewModel.listener
+        binding.selectColor.onItemSelectedListener
+
+
 
         val pattern = "yyyy-MM-dd"
         val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
@@ -78,6 +92,33 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        mainActivity = context as MainActivity
+        setupSpinnerColor()
+
+    }
+
+    private fun setupSpinnerColor() {
+        val colors = resources.getStringArray(R.array.color_select)
+
+        val color = ColorSpinner(R.drawable.ic_baseline_fiber_manual_record_24, colors[0])
+        listOfYear.add(color)
+
+        val color1 = ColorSpinner(R.drawable.ic_baseline_fiber_manual_record_24_1, colors[1])
+        listOfYear.add(color1)
+
+        val color2 = ColorSpinner(R.drawable.ic_baseline_fiber_manual_record_24_2, colors[2])
+        listOfYear.add(color2)
+
+        val color3 = ColorSpinner(R.drawable.ic_baseline_fiber_manual_record_24_3, colors[3])
+        listOfYear.add(color3)
+
+        val color4 = ColorSpinner(R.drawable.ic_baseline_fiber_manual_record_24_4, colors[4])
+        listOfYear.add(color4)
+
+
+        spinnerAdapterColor = SpinnerAdapter(mainActivity, R.layout.item_spinner, listOfYear)
+        binding.selectColor.adapter = spinnerAdapterColor
+
     }
 
     private fun updateItem() {
@@ -85,7 +126,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
         val dateString = binding.textDate.text.toString()
-        val colorSelect = binding.selectColor.selectedItem.toString()
+        val selectedItem = binding.selectColor.selectedItem as ColorSpinner
 
         val pattern = "yyyy-MM-dd"
         val date = SimpleDateFormat(pattern, Locale.getDefault()).parse(dateString)
@@ -99,7 +140,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
                 title,
                 content,
                 date!!.time,
-                DiaryUtils.parsePriority(colorSelect)
+                DiaryUtils.parsePriority(selectedItem.color_name)
             )
 
             diaryViewModel.updateData(updatedItem)

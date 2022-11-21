@@ -59,8 +59,10 @@ class DiaryViewModel(application: Activity) : ViewModel() {
                 2 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_200)) }
                 3 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_300)) }
                 4 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_400)) }
-                /*0 -> {(parent?.getChildAt(0) as ImageView).setImageDrawable(ContextCompat.getDrawable(application, R.drawable.ic_baseline_fiber_manual_record_24))}
-*/
+
+               // 0 -> { (parent?.getChildAt(0) as ImageView).setImageDrawable(ContextCompat.getDrawable(application, R.drawable.ic_baseline_fiber_manual_record_24)) }
+
+                //0 -> {view?.setBackgroundResource(R.drawable.ic_baseline_fiber_manual_record_24)}
             }
         }
     }

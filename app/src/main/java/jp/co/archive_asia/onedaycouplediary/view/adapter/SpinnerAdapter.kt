@@ -28,9 +28,9 @@ class SpinnerAdapter(
         val model = values[position]
         try {
             binding.imgSpinner.setImageResource(model.color_image)
-            binding.imgSpinner.setColorFilter(ContextCompat.getColor(context, R.color.white))
+         //   binding.imgSpinner.setColorFilter(ContextCompat.getColor(context, R.color.black))
             binding.txtName.text = model.color_name
-            binding.txtName.setTextColor(ContextCompat.getColor(context, R.color.white))
+          //  binding.txtName.setTextColor(ContextCompat.getColor(context, R.color.black))
         } catch (e: Exception) {
             e.printStackTrace()
         }
