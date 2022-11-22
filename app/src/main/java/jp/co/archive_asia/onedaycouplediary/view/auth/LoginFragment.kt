@@ -3,17 +3,15 @@ package jp.co.archive_asia.onedaycouplediary.view.auth
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthMultiFactorException
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentLoginBinding
+import jp.co.archive_asia.onedaycouplediary.firestore.FirestoreClass
+import jp.co.archive_asia.onedaycouplediary.firestore.models.User
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
-import jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragment
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
@@ -43,15 +41,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     override fun onStart() {
         super.onStart()
 
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
+        auth.currentUser
+        /*if (currentUser != null) {
             reload()
-        }
+        }*/
     }
 
     private fun signIn(email: String, password: String) {
 
-        Log.d(TAG, "signIn:$email")
         if (!validateForm()) {
             return
         }
@@ -59,10 +56,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+
+                    FirestoreClass().getUserDetails(this@LoginFragment)
+
                     Toast.makeText(context, "SignIn Success", Toast.LENGTH_SHORT).show()
                     Log.d(SingIn, "Success")
                     auth.currentUser
-                    findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
+                    //findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
 
                 } else {
                     Toast.makeText(context, "emailとか passwordが違う", Toast.LENGTH_SHORT).show()
@@ -72,7 +72,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
     }
 
-    private fun reload() {
+    /*private fun reload() {
         auth.currentUser!!.reload().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 auth.currentUser
@@ -83,7 +83,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
 
         }
-    }
+    }*/
 
     // 앱에서 표시
     private fun validateForm(): Boolean {
@@ -117,9 +117,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         private const val SingIn = "SingIn"
     }
 
-    fun getUid(): String {
-        auth = FirebaseAuth.getInstance()
-
-        return auth.currentUser?.uid.toString()
+    fun userLoggedInSuccess(user: User) {
+        Log.i("Email:", user.email)
+        findNavController().navigate(R.id.action_loginFragment_to_calendarFragment)
     }
 }

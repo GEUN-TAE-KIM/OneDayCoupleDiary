@@ -1,28 +1,17 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
-import androidx.fragment.app.viewModels
+import android.util.Log
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.MainActivity
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentWriteDiaryBinding
+import jp.co.archive_asia.onedaycouplediary.firestore.FirestoreClass
 import jp.co.archive_asia.onedaycouplediary.model.ColorSpinner
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
-import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.fragment_write_diary) {
 
@@ -31,18 +20,12 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
     lateinit var mainActivity: MainActivity
 
-    private val diaryViewModel: DiaryViewModel by viewModels {
-        DiaryViewModelFactory(
-            requireActivity()
-        )
-    }
-
     override fun initView() {
 
         super.initView()
 
         binding.writeBtn.setOnClickListener {
-            addDataWrite()
+            uploadDiaryDetails()
         }
 
         binding.textDate.text =
@@ -54,6 +37,34 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
        // setupSpinnerHandler()
 
     }
+
+    private fun uploadDiaryDetails() {
+        val diary = Diary(
+            FirestoreClass().getCurrentUserID(),
+            binding.titleArea.text.toString(),
+            binding.contentArea.text.toString()
+        )
+
+        FirestoreClass().uploadDiaryDetails(this,diary)
+        findNavController().popBackStack()
+    }
+
+    fun successDiaryListFromFireStore(diaryList: ArrayList<Diary>) {
+        for (i in diaryList) {
+            Log.i("Diary name", i.title)
+        }
+    }
+
+    private fun getDiaryListFromFireStore() {
+       FirestoreClass().getDiaryList(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getDiaryListFromFireStore()
+    }
+
+
 
     private fun setupSpinnerColor() {
         val colors = resources.getStringArray(R.array.color_select)
@@ -90,20 +101,23 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
         }
     }*/
 
-    private fun addDataWrite() {
+
+    /*private fun addDataWrite() {
 
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
-        var dateString = CalendarFragment().date
-        val selectedItem = binding.selectColor.selectedItem as ColorSpinner
+        var dateString = CalendarUtils.selectedDate.toString()
+        val selectedItem = binding.selectColor.selectedItem as String
 
-        val validation = DiaryUtils.verifyData(title, content)
+      //  val validation = DiaryUtils.verifyData(title, content)
 
-        if (validation) {
+       // if (validation) {
 
             // String -> Date -> Long
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateString).time
-            val newData = Diary(0, title, content, date, DiaryUtils.parsePriority(selectedItem.color_name))
+           // val newData = Diary("", title, content, date, DiaryUtils.parsePriority(selectedItem.color_name))
+
+            val newData = Diary("", title, content)
 
             diaryViewModel.addData(newData)
 
@@ -111,10 +125,10 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
             findNavController().popBackStack()
 
-        } else {
+        *//*} else {
             Toast.makeText(activity, "add null", Toast.LENGTH_SHORT).show()
-        }
+        }*//*
 
-    }
+    }*/
 
 }

@@ -9,7 +9,7 @@ import jp.co.archive_asia.onedaycouplediary.model.ColorSelect
 import jp.co.archive_asia.onedaycouplediary.model.ColorSelect.*
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 
-@BindingAdapter("Check")
+/*@BindingAdapter("Check")
 fun setReadCheck(imgView: ImageView, calDay: Diary?) {
     if (calDay != null) {
         imgView.visibility = View.VISIBLE
@@ -21,7 +21,7 @@ fun setReadCheck(imgView: ImageView, calDay: Diary?) {
                 PINK_400 -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_4)
         }
     }
-}
+}*/
 
 
 @BindingAdapter("ColorSelect")

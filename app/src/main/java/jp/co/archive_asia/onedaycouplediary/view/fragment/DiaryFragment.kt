@@ -23,8 +23,6 @@ import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,12 +32,6 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
     private val listOfYear = ArrayList<ColorSpinner>()
 
     lateinit var mainActivity: MainActivity
-
-    private val diaryViewModel: DiaryViewModel by viewModels {
-        DiaryViewModelFactory(
-            requireActivity()
-        )
-    }
 
     private val args by navArgs<DiaryFragmentArgs>()
 
@@ -55,7 +47,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
         val pattern = "yyyy-MM-dd"
         val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-        binding.textDate.text = dateFormat.format(args.currentItem.date)
+        binding.textDate.text = dateFormat.format(args.currentItem)
 
         val menuHost: MenuHost = requireActivity()
 
@@ -138,12 +130,10 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
             val updatedItem = Diary(
                 args.currentItem.id,
                 title,
-                content,
-                date!!.time,
-                DiaryUtils.parsePriority(selectedItem.color_name)
+                content
             )
 
-            diaryViewModel.updateData(updatedItem)
+
 
             Toast.makeText(requireContext(), "update", Toast.LENGTH_SHORT).show()
 
@@ -158,7 +148,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
-            diaryViewModel.deleteData(args.currentItem)
+
             Toast.makeText(
                 requireContext(),
                 "Delete Success: ${args.currentItem.title}",

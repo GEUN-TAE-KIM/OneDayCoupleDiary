@@ -8,32 +8,29 @@ import jp.co.archive_asia.onedaycouplediary.databinding.ItemDiaryListBinding
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.fragment.CalendarFragmentDirections
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
-import jp.co.archive_asia.onedaycouplediary.view.util.dateToString
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
-import java.util.Date
 
-class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
+class WriteAdapter() :
     RecyclerView.Adapter<WriteAdapter.MyViewHolder>() {
 
     private var monthlyDiaryList = emptyList<Diary>()
     private var currentDay = CalendarUtils.selectedDate.toString()
-    private val dailyDiaryList: List<Diary>
+  /*  private val dailyDiaryList: List<Diary>
         get() {
             return monthlyDiaryList.filter {
                 val date = Date(it.date)
                 date.dateToString("yyyy-MM-dd") == currentDay
             }
         }
-
+*/
     class MyViewHolder(private var binding: ItemDiaryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         lateinit var diary: Diary
-        lateinit var calendarViewModel: CalendarViewModel
 
-        fun bind(diary: Diary, calendarViewModel: CalendarViewModel) {
-            binding.diary = diary
-            this.calendarViewModel = calendarViewModel
+
+        fun bind(diary: Diary) {
+            binding.titleArea.text
+            binding.contentArea.text
             binding.executePendingBindings()
 
         }
@@ -47,7 +44,7 @@ class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(dailyDiaryList[position], calendarViewModel)
+        holder.bind(monthlyDiaryList[position])
         holder.itemView.setOnClickListener {
             val action = CalendarFragmentDirections.actionCalendarFragmentToDiaryFragment(
                 monthlyDiaryList[position]
@@ -57,7 +54,7 @@ class WriteAdapter(private val calendarViewModel: CalendarViewModel) :
     }
 
     override fun getItemCount(): Int {
-        return dailyDiaryList.size
+        return monthlyDiaryList.size
     }
 
     fun setData(diary: List<Diary>) {

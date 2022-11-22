@@ -9,6 +9,7 @@ import jp.co.archive_asia.onedaycouplediary.databinding.ItemCalendarBinding
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.dateToString
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -34,11 +35,16 @@ class CalendarAdapter(
 
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-        fun bind(date: String, diary: Diary?) {
+        fun bind(date: String) {
+            binding.dayText.text = date
+            binding.executePendingBindings()
+        }
+
+        /*fun bind(date: String, diary: Diary?) {
             binding.dayText.text = date
             binding.write = diary
             binding.executePendingBindings()
-        }
+        }*/
 
         override fun onClick(view: View) {
             onItemListener.onItemClick(adapterPosition, days[adapterPosition])
@@ -57,22 +63,22 @@ class CalendarAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
-        // binding.write = writeList[position]
+        /* binding.write = writeList[position]
+        val yyyyMMdd = day?.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val write = writeList?.find {
+            dateFormat.format(it.date) == yyyyMMdd
+        }*/
+
         // 日を入る
         val day: LocalDate? = dayList[position]
-        val yyyyMMdd = day?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        val write = diaryList?.find {
-            val date = Date(it.date)
-            date.dateToString("yyyy-MM-dd") == yyyyMMdd
-
-        }
 
         if (day == null) {
-            holder.bind(date = "", write)
+            holder.bind(date = "")
 
         } else {
             //該当する日を入る
-            holder.bind(date = day.dayOfMonth.toString(), write)
+            holder.bind(date = day.dayOfMonth.toString())
 
             if (day == CalendarUtils.selectedDate) {
                 holder.itemView.setBackgroundResource(R.color.pink_300)

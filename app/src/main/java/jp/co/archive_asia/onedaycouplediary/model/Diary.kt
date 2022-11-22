@@ -1,19 +1,16 @@
 package jp.co.archive_asia.onedaycouplediary.model
 
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
-@Entity
 @Parcelize
 data class Diary(
 
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val title: String,
-    val content: String,
-    var date: Long,
-    var color: ColorSelect
+    val id: String = "",
+    val title: String = "",
+    val content: String = "",
+    var diary_id: String = "",
+    /*var date: Long,
+    var color: ColorSelect*/
 
 ): Parcelable

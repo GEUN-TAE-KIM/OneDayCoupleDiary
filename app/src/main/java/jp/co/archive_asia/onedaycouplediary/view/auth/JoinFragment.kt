@@ -5,10 +5,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentJoinBinding
+import jp.co.archive_asia.onedaycouplediary.firestore.FirestoreClass
+import jp.co.archive_asia.onedaycouplediary.firestore.models.User
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
@@ -42,7 +45,16 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
+
+                val firebaseUser : FirebaseUser = task.result!!.user!!
                 if (task.isSuccessful) {
+                    val user = User(
+                        firebaseUser.uid,
+                        binding.etEmail.text.toString()
+                    )
+
+                    FirestoreClass().registerUser(this@JoinFragment, user)
+
                     Toast.makeText(context, "SingUp: Success", Toast.LENGTH_SHORT).show()
                     Log.d(SingUp, "Success")
                     auth.currentUser
@@ -103,5 +115,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         private const val TAG = "EmailPassword"
         private const val SingUp = "SingUp"
     }
+
 
 }

@@ -13,20 +13,13 @@ import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.dayInMonthAr
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFromDate
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.view.util.addFinishAppBackButtonCallback
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar),
     CalendarAdapter.OnItemListener {
 
-    private val adapter: WriteAdapter by lazy { WriteAdapter(calendarViewModel) }
-    private val calendarViewModel: CalendarViewModel by viewModels {
-        CalendarViewModelFactory(
-            requireActivity()
-        )
-    }
+    private lateinit var adapter: WriteAdapter
 
     private var dayList = dayInMonthArray(selectedDate)
     private val adapters = CalendarAdapter(dayList, onItemListener = this)
@@ -43,14 +36,12 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         //先月、クリックイベント
         binding.preBtn.setOnClickListener {
             selectedDate = selectedDate.minusMonths(1)
-            calendarViewModel.selectDateData(selectedDate)
             binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
         //来月、クリックイベント
         binding.nextBtn.setOnClickListener {
             selectedDate = selectedDate.plusMonths(1)
-            calendarViewModel.selectDateData(selectedDate)
             binding.monthYearText.text = monthYearFromDate(selectedDate)
         }
 
@@ -68,14 +59,14 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
     }
 
-    override fun initObservers() {
+  /*  override fun initObservers() {
         calendarViewModel.currentData.observe(viewLifecycleOwner) { monthlyDiary ->
             val dayList = dayInMonthArray(selectedDate)
             adapters.update(dayList, monthlyDiary)
             adapter.setData(monthlyDiary)
         }
     }
-
+*/
     override fun onItemClick(position: Int, dayText: LocalDate?) {
 
         if (dayText != null) {
@@ -98,7 +89,6 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         binding.recyclerView.adapter = adapters
 
-        calendarViewModel.selectDateData(selectedDate)
 
     }
 
