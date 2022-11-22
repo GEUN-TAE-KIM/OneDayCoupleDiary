@@ -13,12 +13,12 @@ import jp.co.archive_asia.onedaycouplediary.model.Diary
 fun setReadCheck(imgView: ImageView, calDay: Diary?) {
     if (calDay != null) {
         imgView.visibility = View.VISIBLE
-            when(calDay.color.toString()) {
-                "MAIN_PINK"-> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24)
-                "PINK_100" -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_1)
-                "PINK_200" -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_2)
-                "PINK_300" -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_3)
-                "PINK_400" -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_4)
+            when(calDay.color) {
+                MAIN_PINK-> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24)
+                PINK_100 -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_1)
+                PINK_200 -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_2)
+                PINK_300 -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_3)
+                PINK_400 -> imgView.setImageResource(R.drawable.ic_baseline_fiber_manual_record_24_4)
         }
     }
 }
