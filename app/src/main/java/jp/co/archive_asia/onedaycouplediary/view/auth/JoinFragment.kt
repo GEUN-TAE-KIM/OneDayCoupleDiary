@@ -5,20 +5,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentJoinBinding
-import jp.co.archive_asia.onedaycouplediary.firestore.UserViewModel
-import jp.co.archive_asia.onedaycouplediary.firestore.models.User
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.viewmodel.JoinViewModel
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
-    private lateinit var auth: FirebaseAuth
-    private val userViewModel : UserViewModel by viewModels()
+    private val viewModel : JoinViewModel by viewModels()
 
     override fun initView() {
         super.initView()
@@ -32,48 +26,28 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
             val password = binding.etPassword.text.toString()
 
             createAccount(email, password)
-
         }
+    }
 
-        auth = Firebase.auth
+    override fun initObservers() {
+        super.initObservers()
+        viewModel.result.observe(viewLifecycleOwner) {
+            Toast.makeText(context, "SingUp: Success", Toast.LENGTH_SHORT).show()
+            Log.d(SingUp, "Success")
+            findNavController().navigate(R.id.action_joinFragment_to_calendarFragment)
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            Log.w(SingUp, "Failed")
+            Toast.makeText(context, "SingUp Failed: $errorMessage", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun createAccount(email: String, password: String) {
-
         Log.d(TAG, "createAccount:$email")
         if (!validateForm()) {
             return
         }
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-
-                val firebaseUser : FirebaseUser = task.result!!.user!!
-                if (task.isSuccessful) {
-                    val user = User(
-                        firebaseUser.uid,
-                        binding.etEmail.text.toString()
-                    )
-                    userViewModel.addUser(user)
-
-                    Toast.makeText(context, "SingUp: Success", Toast.LENGTH_SHORT).show()
-                    Log.d(SingUp, "Success")
-                    auth.currentUser
-                    findNavController().popBackStack()
-                } else {
-                    Log.w(SingUp, "Failed", task.exception)
-                    Toast.makeText(context, "SingUp: Failed", Toast.LENGTH_SHORT).show()
-                }
-                if (email == email) {
-                    Toast.makeText(context, "同じメールがあるとか形式が違うです。", Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "同じメールがある")
-                    binding.etEmail.error = "Required."
-
-                } else {
-                    binding.etEmail.error = null
-                }
-
-            }
+        viewModel.createAccount(email, password)
     }
 
     // 앱에서 표시
@@ -91,6 +65,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
 
         val password = binding.etPassword.text.toString()
+        // TODO: 이메일 형식 체크
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(context, "password 入力", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "password なし")

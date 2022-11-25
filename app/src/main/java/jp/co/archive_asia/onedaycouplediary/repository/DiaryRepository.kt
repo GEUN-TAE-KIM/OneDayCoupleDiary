@@ -77,7 +77,7 @@ class DiaryRepository {
             diaryCollection.document(diary.toString()).delete()
 
                 .addOnSuccessListener {
-                    response.value = EmptyResult.Success()
+                    response.value = EmptyResult.Success
                 }
                 .addOnFailureListener { exception ->
                     val errorMessage = exception.message.toString()

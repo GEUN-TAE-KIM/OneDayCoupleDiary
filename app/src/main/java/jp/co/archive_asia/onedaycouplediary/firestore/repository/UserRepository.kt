@@ -1,38 +1,67 @@
 package jp.co.archive_asia.onedaycouplediary.firestore.repository
 
-import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import jp.co.archive_asia.onedaycouplediary.firestore.Constants.USERS
 import jp.co.archive_asia.onedaycouplediary.firestore.models.User
-import jp.co.archive_asia.onedaycouplediary.firestore.response.ResultStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import jp.co.archive_asia.onedaycouplediary.firestore.response.EmptyResult
+
+typealias AuthCallback = (EmptyResult) -> Unit
 
 class UserRepository {
 
+    private val auth = Firebase.auth
     private val userCollection: CollectionReference by lazy {
         Firebase.firestore.collection(USERS)
     }
 
-    suspend fun addNewUser(user: User): MutableLiveData<ResultStatus<User>> =
-        withContext(Dispatchers.IO) {
+    val currentUser get() = auth.currentUser
 
-            val resultStatus = MutableLiveData<ResultStatus<User>>()
-            userCollection.document(user.id).set(user)
-
-                .addOnSuccessListener {
-                    resultStatus.value = ResultStatus.Success(user)
+    fun emailLogin(email: String, password: String, result: AuthCallback) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    result(EmptyResult.Success)
+                } else {
+                    val errorMessage = getErrorMessage(task)
+                    result(EmptyResult.Error(errorMessage))
                 }
+            }
+    }
 
-                .addOnFailureListener { exception ->
-                    val errorMessage = exception.message.toString()
-                    resultStatus.value = ResultStatus.Error(message = errorMessage)
+    fun signUpEmail(email: String, password: String, result: AuthCallback) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { authTask ->
+                if (authTask.isSuccessful) {
+                    val uid = authTask.result.user!!.uid
+                    val user = User(email = email)
+                    userCollection.document(uid).set(user)
+                        .addOnCompleteListener { firestoreTask ->
+                            if (firestoreTask.isSuccessful) {
+                                result(EmptyResult.Success)
+                            } else {
+                                result(EmptyResult.Error(firestoreTask.exception?.message.toString()))
+                            }
+                        }
+                } else {
+                    result(EmptyResult.Error(getErrorMessage(authTask)))
                 }
+            }
+    }
 
-            resultStatus
+    private fun getErrorMessage(task: Task<AuthResult>): String {
+        return when(task.exception) {
+            is FirebaseAuthInvalidCredentialsException -> { "正しいメールを入力してください" }
+            is FirebaseAuthUserCollisionException -> { "すでに登録されているメールです" }
+            is FirebaseAuthWeakPasswordException -> { "パスワードは６桁以上を入力してください" }
+            else -> { "予想せぬエラーが発生しました" }
         }
-
-
+    }
 }
