@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import jp.co.archive_asia.onedaycouplediary.R
-import jp.co.archive_asia.onedaycouplediary.database.DiaryDatabase
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.repository.DiaryRepository
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +18,7 @@ import kotlinx.coroutines.launch
 
 class DiaryViewModel(application: Activity) : ViewModel() {
 
-    private val writeDao = DiaryDatabase.getDatabase(application).writeDao()
-    private val repository: DiaryRepository = DiaryRepository(writeDao)
+    private val repository: DiaryRepository by lazy { DiaryRepository() }
 
     fun addData(diary: Diary) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,33 +35,6 @@ class DiaryViewModel(application: Activity) : ViewModel() {
     fun deleteData(diary: Diary) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteData(diary)
-        }
-    }
-
-    fun searchDatabase(searchQuery: String): LiveData<List<Diary>> {
-        return repository.searchDatabase(searchQuery).asLiveData()
-    }
-
-    val listener: AdapterView.OnItemSelectedListener = object :
-        AdapterView.OnItemSelectedListener{
-        override fun onNothingSelected(p0: AdapterView<*>?) {}
-        override fun onItemSelected(
-            parent: AdapterView<*>?,
-            view: View?,
-            position: Int,
-            id: Long
-        ) {
-            when(position){
-                0 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.main_pink)) }
-                1 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_100)) }
-                2 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_200)) }
-                3 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_300)) }
-                4 -> { (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.pink_400)) }
-
-               // 0 -> { (parent?.getChildAt(0) as ImageView).setImageDrawable(ContextCompat.getDrawable(application, R.drawable.ic_baseline_fiber_manual_record_24)) }
-
-                //0 -> {view?.setBackgroundResource(R.drawable.ic_baseline_fiber_manual_record_24)}
-            }
         }
     }
 

@@ -51,7 +51,6 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
        //binding.selectColor.onItemSelectedListener = diaryViewModel.listener
         mainActivity = context as MainActivity
         setupSpinnerColor()
-       // setupSpinnerHandler()
 
     }
 
@@ -79,19 +78,9 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
     }
 
-/*    private fun setupSpinnerHandler() {
-        binding.selectColor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                binding.selectColor.getItemAtPosition(position) as ColorSpinner
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }*/
-
     private fun addDataWrite() {
 
+        val id = ""
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
         var dateString = CalendarFragment().date
@@ -103,7 +92,7 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
             // String -> Date -> Long
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateString).time
-            val newData = Diary(0, title, content, date, DiaryUtils.parsePriority(selectedItem.color_name))
+            val newData = Diary(id, title, content, date, DiaryUtils.parsePriority(selectedItem.color_name))
 
             diaryViewModel.addData(newData)
 
