@@ -53,10 +53,15 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         }
 
+        binding.toolbarSetting.setNavigationOnClickListener {
+            findNavController().navigate(R.id.action_calendarFragment_to_settingFragment)
+        }
+
         binding.textDate.text =
             selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         setMonthView()
+
 
         addFinishAppBackButtonCallback()
 
