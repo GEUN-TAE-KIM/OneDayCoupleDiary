@@ -2,6 +2,7 @@ package jp.co.archive_asia.onedaycouplediary.view.auth
 
 import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,8 @@ import jp.co.archive_asia.onedaycouplediary.databinding.FragmentJoinBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.showToast
 import jp.co.archive_asia.onedaycouplediary.viewmodel.JoinViewModel
+import java.util.regex.Pattern
+
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
@@ -67,7 +70,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         val password = binding.etPassword.text.toString()
         // TODO: 이메일 형식 체크
-        val s = "^[a-zA-X0-9]@[a-zA-Z0-9].[a-zA-Z0-9]"
+        val s = "[a-zA-X0-9]@[a-zA-Z0-9].[a-zA-Z0-9]"
+        val emailPatttern: Pattern = Patterns.EMAIL_ADDRESS
 
 //        if (email != s) {
 //            Toast.makeText(context, "email 入力", Toast.LENGTH_SHORT).show()

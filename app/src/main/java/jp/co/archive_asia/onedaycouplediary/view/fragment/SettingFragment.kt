@@ -17,9 +17,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.buttonJoin.setOnClickListener {
-            findNavController().navigate(R.id.action_global_joinFragment)
+
+        binding.buttonLogout.setOnClickListener {
+            signOut()
+            findNavController().navigate(R.id.introFragment)
         }
+
+    }
+
+    private fun signOut() {
+        viewModel.signOut()
     }
 
 }

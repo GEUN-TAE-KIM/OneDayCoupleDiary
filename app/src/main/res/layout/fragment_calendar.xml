@@ -21,11 +21,11 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar_setting"
+                    style="@style/Widget.App.Toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:navigationIcon="@drawable/ic_baseline_settings_24"
-                    />
+                    app:navigationIcon="@drawable/ic_baseline_settings_24" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -160,7 +160,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:hint="2022-12-31"/>
+                    tools:hint="2022-12-31" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/dialogButton"

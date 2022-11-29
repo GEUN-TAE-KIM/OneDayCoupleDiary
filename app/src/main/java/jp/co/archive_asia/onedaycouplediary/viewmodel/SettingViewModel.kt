@@ -11,7 +11,12 @@ class SettingViewModel : ViewModel() {
         emit(userRepository.currentUser?.isAnonymous ?: false)
     }
 
-    private val userRepository : UserRepository by lazy {
+    private val userRepository: UserRepository by lazy {
         UserRepository()
     }
+
+    fun signOut() {
+        userRepository.logout { }
+    }
+
 }

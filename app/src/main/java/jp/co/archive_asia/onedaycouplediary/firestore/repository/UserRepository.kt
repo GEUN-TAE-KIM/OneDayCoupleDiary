@@ -100,12 +100,25 @@ class UserRepository {
             }
     }
 
+    fun logout(result: AuthCallback) {
+        auth.signOut()
+        result(EmptyResult.Success)
+    }
+
     private fun getErrorMessage(task: Task<AuthResult>): String {
-        return when(task.exception) {
-            is FirebaseAuthInvalidCredentialsException -> { "正しいメールを入力してください" }
-            is FirebaseAuthUserCollisionException -> { "すでに登録されているメールです" }
-            is FirebaseAuthWeakPasswordException -> { "パスワードは６桁以上を入力してください" }
-            else -> { "予想せぬエラーが発生しました" }
+        return when (task.exception) {
+            is FirebaseAuthInvalidCredentialsException -> {
+                "正しいメールを入力してください"
+            }
+            is FirebaseAuthUserCollisionException -> {
+                "すでに登録されているメールです"
+            }
+            is FirebaseAuthWeakPasswordException -> {
+                "パスワードは６桁以上を入力してください"
+            }
+            else -> {
+                "予想せぬエラーが発生しました"
+            }
         }
     }
 }
