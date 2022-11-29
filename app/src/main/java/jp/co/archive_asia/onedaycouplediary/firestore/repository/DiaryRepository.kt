@@ -9,6 +9,7 @@ import jp.co.archive_asia.onedaycouplediary.firestore.response.EmptyResult
 import jp.co.archive_asia.onedaycouplediary.firestore.response.ResultStatus
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 
+typealias ResultCallback<T> = (ResultStatus<T>) -> Unit
 typealias EmptyCallback = (EmptyResult) -> Unit
 
 class DiaryRepository {
@@ -17,7 +18,7 @@ class DiaryRepository {
         Firebase.firestore.collection(DIARY)
     }
 
-    fun addData(diary: Diary, result: (ResultStatus<Diary>) -> Unit) {
+    fun addData(diary: Diary, result: ResultCallback<Diary>) {
 
         diaryCollection.add(diary)
             .addOnSuccessListener { diaryDoc ->
@@ -31,7 +32,7 @@ class DiaryRepository {
 
     }
 
-    fun updateData(diary: Diary, result: (ResultStatus<Diary>) -> Unit) {
+    fun updateData(diary: Diary, result: ResultCallback<Diary>) {
 
         val diaryId = diary.user_id
 
@@ -61,7 +62,7 @@ class DiaryRepository {
     }
 
     // 작성한 전체 일기 취득
-    fun getAllDiary(uid: String, result: (ResultStatus<List<Diary>>) -> Unit) {
+    fun getAllDiary(uid: String, result: ResultCallback<List<Diary>>) {
         diaryCollection
             //whereEqualTo는 비교,결과를 검색
             .whereEqualTo(USER_ID, uid)
@@ -78,7 +79,7 @@ class DiaryRepository {
             }
     }
 
-    fun getMonthlyDiary(uid: String, result: (ResultStatus<List<Diary>>) -> Unit) {
+    fun getMonthlyDiary(uid: String, result: ResultCallback<List<Diary>>) {
         // Timestamp
         diaryCollection
 
