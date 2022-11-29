@@ -1,12 +1,5 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.MainActivity
@@ -18,8 +11,8 @@ import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.showToast
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -31,11 +24,7 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
     lateinit var mainActivity: MainActivity
 
-    private val diaryViewModel: DiaryViewModel by viewModels {
-        DiaryViewModelFactory(
-            requireActivity()
-        )
-    }
+    private val diaryViewModel: DiaryViewModel by viewModels()
 
     override fun initView() {
 
@@ -51,7 +40,6 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
        //binding.selectColor.onItemSelectedListener = diaryViewModel.listener
         mainActivity = context as MainActivity
         setupSpinnerColor()
-       // setupSpinnerHandler()
 
     }
 
@@ -79,19 +67,9 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
     }
 
-/*    private fun setupSpinnerHandler() {
-        binding.selectColor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                binding.selectColor.getItemAtPosition(position) as ColorSpinner
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-        }
-    }*/
-
     private fun addDataWrite() {
 
+        val id = ""
         val title = binding.titleArea.text.toString()
         val content = binding.contentArea.text.toString()
         var dateString = CalendarFragment().date
@@ -103,16 +81,16 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
             // String -> Date -> Long
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateString).time
-            val newData = Diary(0, title, content, date, DiaryUtils.parsePriority(selectedItem.color_name))
+            val newData = Diary(id, title, content, date, DiaryUtils.parsePriority(selectedItem.color_name))
 
             diaryViewModel.addData(newData)
 
-            Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
+            showToast("add")
 
             findNavController().popBackStack()
 
         } else {
-            Toast.makeText(activity, "add null", Toast.LENGTH_SHORT).show()
+            showToast("add null")
         }
 
     }

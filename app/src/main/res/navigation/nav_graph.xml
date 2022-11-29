@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_splashFragment_to_introFragment"
             app:destination="@id/introFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -28,6 +33,11 @@
         <action
             android:id="@+id/action_introFragment_to_joinFragment"
             app:destination="@id/joinFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:popUpTo="@id/introFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

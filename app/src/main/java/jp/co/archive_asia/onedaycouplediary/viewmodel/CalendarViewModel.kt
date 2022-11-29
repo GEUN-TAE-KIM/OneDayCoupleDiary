@@ -1,38 +1,64 @@
 package jp.co.archive_asia.onedaycouplediary.viewmodel
 
-import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import jp.co.archive_asia.onedaycouplediary.database.DiaryDatabase
+import jp.co.archive_asia.onedaycouplediary.firestore.repository.DiaryRepository
+import jp.co.archive_asia.onedaycouplediary.firestore.repository.UserRepository
+import jp.co.archive_asia.onedaycouplediary.firestore.response.ResultStatus
 import jp.co.archive_asia.onedaycouplediary.model.Diary
-import jp.co.archive_asia.onedaycouplediary.repository.DiaryRepository
+import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.dateToString
 import jp.co.archive_asia.onedaycouplediary.view.util.toDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
 
-class CalendarViewModel(application: Activity) : ViewModel() {
+class CalendarViewModel() : ViewModel() {
 
-    private val writeDao = DiaryDatabase.getDatabase(application).writeDao()
-    private val repository: DiaryRepository = DiaryRepository(writeDao)
+    private val repository: DiaryRepository by lazy { DiaryRepository() }
+    private val errorMessage: MutableLiveData<String> = MutableLiveData()
 
-    // val getAllData: LiveData<List<Write>> = repository.getAllData.asLiveData()
-
+    private var allDiaryList: List<Diary> = listOf()
     private var _currentData = MutableLiveData<List<Diary>>()
     val currentData: LiveData<List<Diary>> = _currentData
 
-    /*fun readDateData(date: String): LiveData<List<Write>> {
-        viewModelScope.launch(Dispatchers.IO) {
-            _currentData.postValue(repository.readDateData(date))
+    init {
+        val uid = UserRepository().currentUser!!.uid
+        repository.getAllDiary(uid) {
+            when (it) {
+                is ResultStatus.Success<List<Diary>> -> {
+                    allDiaryList = it.data
+                    val currentDate = CalendarUtils.selectedDate
+                    getMonthlyDiary(currentDate)
+                }
+                is ResultStatus.Error -> {
+                    // TODO: 실패처리
+                    errorMessage.value = it.message
+                }
+            }
         }
-        return _currentData
-    }*/
+    }
 
     fun selectDateData(currentMonth: LocalDate) {
+        getMonthlyDiary(currentMonth)
+    }
+
+    private fun getMonthlyDiary(currentMonth: LocalDate) {
+        val currentMonthString =
+            CalendarUtils.monthYearFromDate(currentMonth) // TODO "yyyy年 MM月" "202210"
+
+        val monthlyDiaryList = allDiaryList.filter { diary ->
+
+            val diaryMonth =
+                Date(diary.date).dateToString("yyyy年 MM月") // TODO  ""yyyy年 MM月" "202210"
+            currentMonthString == diaryMonth
+        }
+        _currentData.postValue(monthlyDiaryList)
+    }
+
+    fun selectDateData1(currentMonth: LocalDate) {
 
         // 현재 월(currentMonth)을 가지고 저번달 다음달 구하기
         val firstDay = currentMonth.withDayOfMonth(1)
@@ -60,9 +86,7 @@ class CalendarViewModel(application: Activity) : ViewModel() {
         val longPre = datePre?.time ?: 0
         val longNext = dateNext?.time ?: 0
 
-        viewModelScope.launch(Dispatchers.IO) {
-            _currentData.postValue(repository.selectDateData(longPre, longNext))
-        }
+
     }
 
 }

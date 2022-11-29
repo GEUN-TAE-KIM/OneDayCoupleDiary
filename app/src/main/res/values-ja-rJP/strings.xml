@@ -3,6 +3,13 @@
     <string name="app_name">OneDayCoupleDiary</string>
     <string name="forget_password_message">パスワードをお忘れですか？</string>
 
+    <string name="login_anonymously">登録せず利用開始</string>
+
+    <string name="dialog_confirm_title">確認してください</string>
+    <string name="dialog_confirm_message">アプリを削除すると大切な日記が消えてしまします。このまま進みますか？</string>
+    <string name="dialog_ok_button">大丈夫です</string>
+    <string name="dialog_cancel_button">キャンセル</string>
+
     <string name="join">新規登録</string>
     <string name="calendar">カレンダー</string>
     <string name="diary">日記</string>
