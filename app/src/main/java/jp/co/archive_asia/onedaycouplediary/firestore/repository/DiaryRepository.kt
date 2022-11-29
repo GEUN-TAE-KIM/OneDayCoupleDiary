@@ -65,7 +65,6 @@ class DiaryRepository {
         diaryCollection
             //whereEqualTo는 비교,결과를 검색
             .whereEqualTo(USER_ID, uid)
-            // TODO: 해당 월의 일기 도큐멘트만 가져오도록
             //.orderBy("date", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
                 if (error != null) {
@@ -77,38 +76,6 @@ class DiaryRepository {
                     result(ResultStatus.Success(diary))
                 } ?: result(ResultStatus.Error("errorMessage"))
             }
-
-//            .addOnSuccessListener { result ->
-//                val diary = result.toObjects(Diary::class.java)
-//                result(ResultStatus.Success(diary))
-//                listenToMultiple()
-//            }
-//            .addOnFailureListener { exception ->
-//                val errorMessage = exception.message.toString()
-//                result(ResultStatus.Error(errorMessage))
-//            }
-
-    }
-
-    private fun listenToMultiple() {
-
-        diaryCollection
-            .whereEqualTo("MM", "title")
-            .addSnapshotListener { value, e ->
-                if (e != null) {
-
-                    return@addSnapshotListener
-                }
-
-                val cities = ArrayList<String>()
-                for (doc in value!!) {
-                    doc.getString("name")?.let {
-                        cities.add(it)
-                    }
-                }
-
-            }
-
     }
 
     fun getMonthlyDiary(uid: String, result: (ResultStatus<List<Diary>>) -> Unit) {
@@ -129,11 +96,5 @@ class DiaryRepository {
                 result(ResultStatus.Error(errorMessage))
             }
     }
-
-
-    /* suspend fun selectDateData2(pre: Long, next: Long): List<Diary> {
-         return diaryDao.selectDateData(pre, next)
-     }*/
-
 
 }

@@ -27,7 +27,7 @@ class CalendarViewModel() : ViewModel() {
     init {
         val uid = UserRepository().currentUser!!.uid
         repository.getAllDiary(uid) {
-            when(it) {
+            when (it) {
                 is ResultStatus.Success<List<Diary>> -> {
                     allDiaryList = it.data
                     val currentDate = CalendarUtils.selectedDate
@@ -46,13 +46,13 @@ class CalendarViewModel() : ViewModel() {
     }
 
     private fun getMonthlyDiary(currentMonth: LocalDate) {
-        val currentMonthString = CalendarUtils.monthYearFromDate(currentMonth) // TODO "yyyy年 MM月" "202210"
+        val currentMonthString =
+            CalendarUtils.monthYearFromDate(currentMonth) // TODO "yyyy年 MM月" "202210"
 
         val monthlyDiaryList = allDiaryList.filter { diary ->
-            // currentMonth -> "yyyyMM" or 000000(Long, Int)
-            // Long Type -> LocalDate -> "yyyy年 MM月"
 
-            val diaryMonth = Date(diary.date).dateToString("yyyy年 MM月") // TODO  ""yyyy年 MM月" "202210"
+            val diaryMonth =
+                Date(diary.date).dateToString("yyyy年 MM月") // TODO  ""yyyy年 MM月" "202210"
             currentMonthString == diaryMonth
         }
         _currentData.postValue(monthlyDiaryList)
