@@ -107,5 +107,8 @@
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
 
+    <action android:id="@+id/action_global_joinFragment"
+        app:destination="@id/joinFragment" />
+
 
 </navigation>

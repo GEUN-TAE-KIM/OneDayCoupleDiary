@@ -18,11 +18,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     override fun initView() {
         super.initView()
 
-        binding.btnBack.setOnClickListener {
+        binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        binding.btnJoin.setOnClickListener {
+        binding.buttonJoin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
@@ -69,12 +69,12 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         // TODO: 이메일 형식 체크
         val s = "^[a-zA-X0-9]@[a-zA-Z0-9].[a-zA-Z0-9]"
 
-        if (email != s) {
-            Toast.makeText(context, "email 入力", Toast.LENGTH_SHORT).show()
-            Log.d(TAG, "email 形式じゃない")
-            binding.etEmail.error = "Required."
-            valid = false
-        }
+//        if (email != s) {
+//            Toast.makeText(context, "email 入力", Toast.LENGTH_SHORT).show()
+//            Log.d(TAG, "email 形式じゃない")
+//            binding.etEmail.error = "Required."
+//            valid = false
+//        }
 
         if (TextUtils.isEmpty(password)) {
             showToast("password 入力")
