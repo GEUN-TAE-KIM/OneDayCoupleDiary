@@ -2,7 +2,6 @@ package jp.co.archive_asia.onedaycouplediary.view.auth
 
 import android.text.TextUtils
 import android.util.Log
-import android.util.Patterns
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -69,16 +68,21 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
 
         val password = binding.etPassword.text.toString()
-        // TODO: 이메일 형식 체크
-        val s = "[a-zA-X0-9]@[a-zA-Z0-9].[a-zA-Z0-9]"
-        val emailPatttern: Pattern = Patterns.EMAIL_ADDRESS
 
-//        if (email != s) {
-//            Toast.makeText(context, "email 入力", Toast.LENGTH_SHORT).show()
-//            Log.d(TAG, "email 形式じゃない")
-//            binding.etEmail.error = "Required."
-//            valid = false
-//        }
+        // TODO: 이메일 형식 체크
+        fun checkEmail(): Boolean {
+            val mailFormat =
+                "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+            val mail = binding.etEmail.text.toString().trim()
+            return Pattern.matches(mailFormat, mail)
+        }
+
+        if (!checkEmail()) {
+            Toast.makeText(context, "emailの形式が違う", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "email 形式じゃない")
+            binding.etEmail.error = "Required."
+            valid = false
+        }
 
         if (TextUtils.isEmpty(password)) {
             showToast("password 入力")
