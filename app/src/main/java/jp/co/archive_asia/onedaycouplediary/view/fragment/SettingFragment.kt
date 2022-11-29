@@ -14,7 +14,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     override fun initView() {
         super.initView()
         binding.viewModel = viewModel
-        binding.buttonBack.setOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
 

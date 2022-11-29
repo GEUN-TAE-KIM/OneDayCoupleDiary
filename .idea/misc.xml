@@ -5,17 +5,13 @@
       <map>
         <entry key="../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_pink.xml" value="0.167" />
-        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.168" />
-        <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.168" />
-        <entry key="app/src/main/res/drawable/ic_baseline_content_paste_24.xml" value="0.168" />
         <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24.xml" value="0.1705" />
         <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24_1.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24_2.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24_3.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24_4.xml" value="0.1515" />
-        <entry key="app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.168" />
-        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.168" />
+        <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1495" />
         <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/splash_screen.xml" value="0.186" />
         <entry key="app/src/main/res/layout/activity_intro.xml" value="0.1830169677734375" />
@@ -32,7 +28,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/fragment_my_info.xml" value="0.2504528985507246" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.2504528985507246" />
-        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.213768115942029" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.182518115942029" />
         <entry key="app/src/main/res/layout/fragment_time_line.xml" value="0.2504528985507246" />
         <entry key="app/src/main/res/layout/fragment_update.xml" value="0.271875" />
