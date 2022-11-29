@@ -7,11 +7,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Diary(
-
-    var id: String = "",
+    var user_id: String = "",
     var title: String = "",
     var content: String = "",
-    var date: Long,
-    var color: ColorSelect
-
+    var date: Long = 0,
+    var color: ColorSelect = ColorSelect.MAIN_PINK
 ): Parcelable

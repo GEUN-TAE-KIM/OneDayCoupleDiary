@@ -4,12 +4,9 @@ import android.app.AlertDialog
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.core.view.get
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -17,14 +14,12 @@ import androidx.navigation.fragment.navArgs
 import jp.co.archive_asia.onedaycouplediary.MainActivity
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentDiaryBinding
-import jp.co.archive_asia.onedaycouplediary.model.ColorSelect
 import jp.co.archive_asia.onedaycouplediary.model.ColorSpinner
 import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,11 +30,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
     lateinit var mainActivity: MainActivity
 
-    private val diaryViewModel: DiaryViewModel by viewModels {
-        DiaryViewModelFactory(
-            requireActivity()
-        )
-    }
+    private val diaryViewModel: DiaryViewModel by viewModels()
 
     private val args by navArgs<DiaryFragmentArgs>()
 
@@ -136,7 +127,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
         if (validation) {
 
             val updatedItem = Diary(
-                args.currentItem.id,
+                args.currentItem.user_id,
                 title,
                 content,
                 date!!.time,

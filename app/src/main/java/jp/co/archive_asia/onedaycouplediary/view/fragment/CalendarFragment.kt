@@ -14,7 +14,6 @@ import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.monthYearFro
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils.selectedDate
 import jp.co.archive_asia.onedaycouplediary.view.util.addFinishAppBackButtonCallback
 import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.CalendarViewModelFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -22,12 +21,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
     CalendarAdapter.OnItemListener {
 
     private val adapter: WriteAdapter by lazy { WriteAdapter(calendarViewModel) }
-    private val calendarViewModel: CalendarViewModel by viewModels {
-        CalendarViewModelFactory(
-            requireActivity()
-        )
-    }
-
+    private val calendarViewModel: CalendarViewModel by viewModels()
     private var dayList = dayInMonthArray(selectedDate)
     private val adapters = CalendarAdapter(dayList, onItemListener = this)
 
@@ -97,9 +91,6 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         binding.recyclerView.layoutManager = GridLayoutManager(context, 7)
 
         binding.recyclerView.adapter = adapters
-
-        calendarViewModel.selectDateData(selectedDate)
-
     }
 
     private fun getEvent(date: String) {

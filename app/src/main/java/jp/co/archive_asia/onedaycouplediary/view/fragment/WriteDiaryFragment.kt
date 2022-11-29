@@ -1,12 +1,6 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.MainActivity
@@ -19,7 +13,6 @@ import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
-import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModelFactory
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -31,11 +24,7 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
     lateinit var mainActivity: MainActivity
 
-    private val diaryViewModel: DiaryViewModel by viewModels {
-        DiaryViewModelFactory(
-            requireActivity()
-        )
-    }
+    private val diaryViewModel: DiaryViewModel by viewModels()
 
     override fun initView() {
 
