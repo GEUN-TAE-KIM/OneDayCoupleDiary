@@ -1,6 +1,5 @@
 package jp.co.archive_asia.onedaycouplediary.view.fragment
 
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.MainActivity
@@ -12,6 +11,7 @@ import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.CalendarUtils
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.showToast
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -85,12 +85,12 @@ class WriteDiaryFragment : BaseFragment<FragmentWriteDiaryBinding>(R.layout.frag
 
             diaryViewModel.addData(newData)
 
-            Toast.makeText(activity, "add", Toast.LENGTH_SHORT).show()
+            showToast("add")
 
             findNavController().popBackStack()
 
         } else {
-            Toast.makeText(activity, "add null", Toast.LENGTH_SHORT).show()
+            showToast("add null")
         }
 
     }

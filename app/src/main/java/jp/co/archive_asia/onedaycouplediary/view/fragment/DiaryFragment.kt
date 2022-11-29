@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -19,9 +18,10 @@ import jp.co.archive_asia.onedaycouplediary.model.Diary
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.adapter.SpinnerAdapter
 import jp.co.archive_asia.onedaycouplediary.view.util.DiaryUtils
+import jp.co.archive_asia.onedaycouplediary.view.util.showToast
 import jp.co.archive_asia.onedaycouplediary.viewmodel.DiaryViewModel
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary) {
 
@@ -136,12 +136,12 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
 
             diaryViewModel.updateData(updatedItem)
 
-            Toast.makeText(requireContext(), "update", Toast.LENGTH_SHORT).show()
+            showToast("update")
 
             findNavController().popBackStack()
 
         } else {
-            Toast.makeText(requireContext(), "update null", Toast.LENGTH_SHORT).show()
+            showToast("update null")
         }
     }
 
@@ -150,11 +150,7 @@ class DiaryFragment : BaseFragment<FragmentDiaryBinding>(R.layout.fragment_diary
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
             diaryViewModel.deleteData(args.currentItem)
-            Toast.makeText(
-                requireContext(),
-                "Delete Success: ${args.currentItem.title}",
-                Toast.LENGTH_SHORT
-            ).show()
+            showToast("Delete Success: ${args.currentItem.title}")
             findNavController().popBackStack()
         }
         builder.setNegativeButton("No") { _, _ -> }

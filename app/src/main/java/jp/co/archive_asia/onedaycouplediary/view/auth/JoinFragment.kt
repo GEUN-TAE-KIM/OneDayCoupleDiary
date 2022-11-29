@@ -2,15 +2,14 @@ package jp.co.archive_asia.onedaycouplediary.view.auth
 
 import android.text.TextUtils
 import android.util.Log
-import android.util.Patterns
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import jp.co.archive_asia.onedaycouplediary.R
 import jp.co.archive_asia.onedaycouplediary.databinding.FragmentJoinBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
+import jp.co.archive_asia.onedaycouplediary.view.util.showToast
 import jp.co.archive_asia.onedaycouplediary.viewmodel.JoinViewModel
-import java.util.regex.Pattern
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
@@ -34,13 +33,13 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     override fun initObservers() {
         super.initObservers()
         viewModel.result.observe(viewLifecycleOwner) {
-            Toast.makeText(context, "SingUp: Success", Toast.LENGTH_SHORT).show()
+            showToast("SingUp: Success")
             Log.d(SingUp, "Success")
             findNavController().navigate(R.id.action_joinFragment_to_calendarFragment)
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
             Log.w(SingUp, "Failed")
-            Toast.makeText(context, "SingUp Failed: $errorMessage", Toast.LENGTH_SHORT).show()
+            showToast("SingUp Failed: $errorMessage")
         }
     }
 
@@ -58,7 +57,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
         val email = binding.etEmail.text.toString()
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(context, "email入力", Toast.LENGTH_SHORT).show()
+            showToast("email入力")
             Log.d(TAG, "email入力 なし")
             binding.etEmail.error = "Required."
             valid = false
@@ -78,7 +77,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(context, "password 入力", Toast.LENGTH_SHORT).show()
+            showToast("password 入力")
             Log.d(TAG, "password なし")
             binding.etPassword.error = "Required."
             valid = false
@@ -87,7 +86,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
 
         if (password.length < 6) {
-            Toast.makeText(context, "最低6文字以上入力", Toast.LENGTH_SHORT).show()
+            showToast("最低6文字以上入力")
             Log.d(TAG, "password 6文字以上ない:${password.length}文字")
             binding.etPassword.error = "Required."
             valid = false

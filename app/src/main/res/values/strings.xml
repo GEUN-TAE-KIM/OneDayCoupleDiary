@@ -7,6 +7,13 @@
     <string name="intro" translatable="false">Intro</string>
     <string name="forget_password_message">Forget Password?</string>
 
+    <string name="login_anonymously">Login without Register</string>
+
+    <string name="dialog_confirm_title">Warning</string>
+    <string name="dialog_confirm_message">If you delete the application, the diary will be deleted. Shall we start like this?</string>
+    <string name="dialog_ok_button">OK</string>
+    <string name="dialog_cancel_button">Cancel</string>
+
     <string name="join">Join</string>
     <string name="calendar">Calendar</string>
     <string name="diary">Dairy</string>

@@ -1,10 +1,7 @@
 package jp.co.archive_asia.onedaycouplediary.firestore.repository
 
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
@@ -52,6 +49,53 @@ class UserRepository {
                         }
                 } else {
                     result(EmptyResult.Error(getErrorMessage(authTask)))
+                }
+            }
+    }
+
+    /**
+     * 匿名ログイン
+     */
+    fun signInAnonymously(result: AuthCallback) {
+        auth.signInAnonymously()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val uid = task.result.user!!.uid
+                    val user = User(email = "匿名") // TODO
+                    userCollection.document(uid).set(user)
+                        .addOnCompleteListener { firestoreTask ->
+                            if (firestoreTask.isSuccessful) {
+                                result(EmptyResult.Success)
+                            } else {
+                                result(EmptyResult.Error(firestoreTask.exception?.message.toString()))
+                            }
+                        }
+                } else {
+                    result(EmptyResult.Error(getErrorMessage(task)))
+                }
+            }
+    }
+
+    /**
+     * 匿名ユーザーの会員登録
+     */
+    fun signUpEmailFromAnonymous(email: String, password: String, result: AuthCallback) {
+        val credential = EmailAuthProvider.getCredential(email, password)
+        auth.currentUser!!.linkWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val uid = task.result.user!!.uid
+                    val user = User(email = email)
+                    userCollection.document(uid).set(user)
+                        .addOnCompleteListener { firestoreTask ->
+                            if (firestoreTask.isSuccessful) {
+                                result(EmptyResult.Success)
+                            } else {
+                                result(EmptyResult.Error(firestoreTask.exception?.message.toString()))
+                            }
+                        }
+                } else {
+                    result(EmptyResult.Error(getErrorMessage(task)))
                 }
             }
     }

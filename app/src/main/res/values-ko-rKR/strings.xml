@@ -3,6 +3,13 @@
     <string name="app_name">OneDayCoupleDiary</string>
     <string name="forget_password_message">비밀번호를 잊으셨나요?</string>
 
+    <string name="login_anonymously">비회원으로 시작하기</string>
+
+    <string name="dialog_confirm_title">확인하세요</string>
+    <string name="dialog_confirm_message">앱을 삭제하면 소중한 일기가 사라집니다. 이대로 진행할까요?</string>
+    <string name="dialog_ok_button">괜찮아</string>
+    <string name="dialog_cancel_button">취소</string>
+
     <string name="join">회원가입</string>
     <string name="calendar">달</string>
     <string name="diary">일기</string>
