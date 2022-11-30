@@ -18,4 +18,15 @@
         <item name="android:windowBackground">@color/pink_300</item>
     </style>
 
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+
+    </style>
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorPrimary">@color/main_pink</item>
+        <item name="colorPrimaryVariant">@color/pink_100</item>
+        <item name="colorOnPrimary">@color/pink_400</item>
+    </style>
+
 </resources>

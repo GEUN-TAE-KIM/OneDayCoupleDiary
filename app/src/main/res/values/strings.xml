@@ -13,6 +13,7 @@
     <string name="dialog_confirm_message">If you delete the application, the diary will be deleted. Shall we start like this?</string>
     <string name="dialog_ok_button">OK</string>
     <string name="dialog_cancel_button">Cancel</string>
+    <string name="dialog_message_logout">Are you sure you want to logout?</string>
 
     <string name="join">Join</string>
     <string name="calendar">Calendar</string>
@@ -40,4 +41,11 @@
         <item>PINK_300</item>
         <item>PINK_400</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting">Setting</string>
+    <string name="logout">Logout</string>
+    <string name="backup">BackUp</string>
+    <string name="full_reset">Full Reset</string>
+    <string name="app_version">App Version</string>
 </resources>
