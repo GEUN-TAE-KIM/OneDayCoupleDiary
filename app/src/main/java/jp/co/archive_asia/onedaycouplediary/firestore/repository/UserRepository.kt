@@ -6,7 +6,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import jp.co.archive_asia.onedaycouplediary.firestore.Constants.DIARY
 import jp.co.archive_asia.onedaycouplediary.firestore.Constants.USERS
+import jp.co.archive_asia.onedaycouplediary.firestore.Constants.USER_ID
 import jp.co.archive_asia.onedaycouplediary.firestore.models.User
 import jp.co.archive_asia.onedaycouplediary.firestore.response.EmptyResult
 
@@ -17,6 +19,9 @@ class UserRepository {
     private val auth = Firebase.auth
     private val userCollection: CollectionReference by lazy {
         Firebase.firestore.collection(USERS)
+    }
+    private val diaryCollection: CollectionReference by lazy {
+        Firebase.firestore.collection(DIARY)
     }
 
     val currentUser get() = auth.currentUser
@@ -103,6 +108,37 @@ class UserRepository {
     fun logout(result: AuthCallback) {
         auth.signOut()
         result(EmptyResult.Success)
+    }
+
+    fun delete(result: AuthCallback) {
+
+        val d = Firebase.auth.currentUser?.uid
+
+        // 유저 계정 삭제
+        currentUser?.delete()
+            ?.addOnCompleteListener { firestoreTask ->
+                if (firestoreTask.isSuccessful) {
+                    result(EmptyResult.Success)
+                } else {
+                    result(EmptyResult.Error(firestoreTask.exception?.message.toString()))
+                }
+            }
+        //파이어 스토어 삭제
+        if (d != null) {
+            userCollection.document(d)
+                .delete()
+                .addOnCompleteListener { firestoreTask ->
+                    if (firestoreTask.isSuccessful) {
+                        diaryCollection.document()
+                            .delete()
+
+                    }
+                }
+                .addOnSuccessListener {
+
+                }
+                .addOnFailureListener { }
+        }
     }
 
     private fun getErrorMessage(task: Task<AuthResult>): String {

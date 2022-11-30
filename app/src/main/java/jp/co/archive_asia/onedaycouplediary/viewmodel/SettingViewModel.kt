@@ -19,4 +19,8 @@ class SettingViewModel : ViewModel() {
         userRepository.logout { }
     }
 
+    fun deleteOut() {
+        userRepository.delete {  }
+    }
+
 }

@@ -13,7 +13,6 @@ import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.showConfirmDialog
 import jp.co.archive_asia.onedaycouplediary.viewmodel.SettingViewModel
 
-
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
 
     private val viewModel: SettingViewModel by viewModels()
@@ -28,8 +27,19 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         binding.buttonLogout.setOnClickListener {
-            signOut()
-            findNavController().navigate(R.id.introFragment)
+
+            showConfirmDialog(
+                title = R.string.logout,
+                message = R.string.dialog_message_logout,
+                positiveButtonText = R.string.dialog_ok_button,
+                positiveButtonListener = { _, _ ->
+                    viewModel.deleteOut()
+                    signOut()
+                    findNavController().navigate(R.id.introFragment)
+                },
+                negativeButtonText = R.string.dialog_cancel_button
+            )
+
         }
 
         binding.appVersion.setOnClickListener {
