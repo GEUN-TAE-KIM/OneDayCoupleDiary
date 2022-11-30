@@ -33,9 +33,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                 message = R.string.dialog_message_logout,
                 positiveButtonText = R.string.dialog_ok_button,
                 positiveButtonListener = { _, _ ->
-                    viewModel.deleteOut()
                     signOut()
-                    findNavController().navigate(R.id.introFragment)
                 },
                 negativeButtonText = R.string.dialog_cancel_button
             )
@@ -47,6 +45,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         mainActivity = context as MainActivity
+    }
+
+    override fun initObservers() {
+        super.initObservers()
+        viewModel.logout.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.introFragment)
+        }
     }
 
     private fun signOut() {

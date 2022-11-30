@@ -106,38 +106,52 @@ class UserRepository {
     }
 
     fun logout(result: AuthCallback) {
-        auth.signOut()
-        result(EmptyResult.Success)
+        if (auth.currentUser?.isAnonymous == true) {
+            deleteAnonymous(result)
+        } else {
+            auth.signOut()
+            result(EmptyResult.Success)
+        }
     }
 
-    fun delete(result: AuthCallback) {
-
-        val d = Firebase.auth.currentUser?.uid
-
-        // 유저 계정 삭제
-        currentUser?.delete()
-            ?.addOnCompleteListener { firestoreTask ->
-                if (firestoreTask.isSuccessful) {
-                    result(EmptyResult.Success)
-                } else {
-                    result(EmptyResult.Error(firestoreTask.exception?.message.toString()))
-                }
+    private fun deleteAnonymous(result: AuthCallback) {
+        // 익명 계정 삭제
+        currentUser?.delete()?.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                // 익명 계정 삭제 실패
+                result(EmptyResult.Error(it.exception?.message.toString()))
+                return@addOnCompleteListener
             }
-        //파이어 스토어 삭제
-        if (d != null) {
-            userCollection.document(d)
-                .delete()
-                .addOnCompleteListener { firestoreTask ->
-                    if (firestoreTask.isSuccessful) {
-                        diaryCollection.document()
-                            .delete()
-
+            val uid = Firebase.auth.currentUser?.uid ?: ""
+            val batch = Firebase.firestore.batch()
+            // 삭제할 User 도큐먼
+            val userDocument = userCollection.document(uid)
+            // User 도큐먼트 배치 삭제 등록
+            batch.delete(userDocument)
+            // 파이어스토어 Diary 삭제
+            diaryCollection
+                .whereEqualTo(USER_ID, uid)
+                .get()
+                .addOnCompleteListener { diarySnapshot ->
+                    if (!diarySnapshot.isSuccessful) {
+                        // 다이어리 취득 실패
+                        result(EmptyResult.Error(it.exception?.message.toString()))
+                        return@addOnCompleteListener
                     }
+                    diarySnapshot.result.documents.forEach { documentSnapshot ->
+                        // 다이어리 도큐먼트 배치 삭제 등록
+                        batch.delete(documentSnapshot.reference)
+                    }
+                    // 배치 커밋(실행)
+                    batch.commit()
+                        .addOnCompleteListener { deleteTask ->
+                            if (!deleteTask.isSuccessful) {
+                                result(EmptyResult.Error(deleteTask.exception?.message.toString()))
+                                return@addOnCompleteListener
+                            }
+                            result(EmptyResult.Success)
+                        }
                 }
-                .addOnSuccessListener {
-
-                }
-                .addOnFailureListener { }
         }
     }
 
