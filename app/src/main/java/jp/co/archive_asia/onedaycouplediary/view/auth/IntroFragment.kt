@@ -17,15 +17,15 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>(R.layout.fragment_intro
     override fun initView() {
         super.initView()
 
-        binding.loginBtn.setOnClickListener {
+        binding.buttonLogin.setOnClickListener {
             findNavController().navigate(R.id.action_introFragment_to_loginFragment)
         }
 
-        binding.joinBtn.setOnClickListener {
+        binding.buttonJoin.setOnClickListener {
             findNavController().navigate(R.id.action_introFragment_to_joinFragment)
         }
 
-        binding.signInAnonymouslyBtn.setOnClickListener {
+        binding.buttonLoginAnonymous.setOnClickListener {
             showConfirmDialog(
                 title = R.string.dialog_confirm_title,
                 message = R.string.dialog_confirm_message,

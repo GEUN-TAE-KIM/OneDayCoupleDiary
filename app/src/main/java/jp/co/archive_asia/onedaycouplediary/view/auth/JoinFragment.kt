@@ -10,6 +10,8 @@ import jp.co.archive_asia.onedaycouplediary.databinding.FragmentJoinBinding
 import jp.co.archive_asia.onedaycouplediary.view.BaseFragment
 import jp.co.archive_asia.onedaycouplediary.view.util.showToast
 import jp.co.archive_asia.onedaycouplediary.viewmodel.JoinViewModel
+import java.util.regex.Pattern
+
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
 
@@ -18,11 +20,11 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     override fun initView() {
         super.initView()
 
-        binding.btnBack.setOnClickListener {
+        binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        binding.btnJoin.setOnClickListener {
+        binding.buttonJoin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
@@ -66,11 +68,17 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         }
 
         val password = binding.etPassword.text.toString()
-        // TODO: 이메일 형식 체크
-        val s = "^[a-zA-X0-9]@[a-zA-Z0-9].[a-zA-Z0-9]"
 
-        if (email != s) {
-            Toast.makeText(context, "email 入力", Toast.LENGTH_SHORT).show()
+        // TODO: 이메일 형식 체크
+        fun checkEmail(): Boolean {
+            val mailFormat =
+                "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+            val mail = binding.etEmail.text.toString().trim()
+            return Pattern.matches(mailFormat, mail)
+        }
+
+        if (!checkEmail()) {
+            Toast.makeText(context, "emailの形式が違う", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "email 形式じゃない")
             binding.etEmail.error = "Required."
             valid = false

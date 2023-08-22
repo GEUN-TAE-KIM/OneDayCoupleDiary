@@ -6,7 +6,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import jp.co.archive_asia.onedaycouplediary.firestore.Constants.DIARY
 import jp.co.archive_asia.onedaycouplediary.firestore.Constants.USERS
+import jp.co.archive_asia.onedaycouplediary.firestore.Constants.USER_ID
 import jp.co.archive_asia.onedaycouplediary.firestore.models.User
 import jp.co.archive_asia.onedaycouplediary.firestore.response.EmptyResult
 
@@ -17,6 +19,9 @@ class UserRepository {
     private val auth = Firebase.auth
     private val userCollection: CollectionReference by lazy {
         Firebase.firestore.collection(USERS)
+    }
+    private val diaryCollection: CollectionReference by lazy {
+        Firebase.firestore.collection(DIARY)
     }
 
     val currentUser get() = auth.currentUser
@@ -100,12 +105,70 @@ class UserRepository {
             }
     }
 
+    fun logout(result: AuthCallback) {
+        if (auth.currentUser?.isAnonymous == true) {
+            deleteAnonymous(result)
+        } else {
+            auth.signOut()
+            result(EmptyResult.Success)
+        }
+    }
+
+    private fun deleteAnonymous(result: AuthCallback) {
+        // 익명 계정 삭제
+        currentUser?.delete()?.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                // 익명 계정 삭제 실패
+                result(EmptyResult.Error(it.exception?.message.toString()))
+                return@addOnCompleteListener
+            }
+            val uid = Firebase.auth.currentUser?.uid ?: ""
+            val batch = Firebase.firestore.batch()
+            // 삭제할 User 도큐먼
+            val userDocument = userCollection.document(uid)
+            // User 도큐먼트 배치 삭제 등록
+            batch.delete(userDocument)
+            // 파이어스토어 Diary 삭제
+            diaryCollection
+                .whereEqualTo(USER_ID, uid)
+                .get()
+                .addOnCompleteListener { diarySnapshot ->
+                    if (!diarySnapshot.isSuccessful) {
+                        // 다이어리 취득 실패
+                        result(EmptyResult.Error(it.exception?.message.toString()))
+                        return@addOnCompleteListener
+                    }
+                    diarySnapshot.result.documents.forEach { documentSnapshot ->
+                        // 다이어리 도큐먼트 배치 삭제 등록
+                        batch.delete(documentSnapshot.reference)
+                    }
+                    // 배치 커밋(실행)
+                    batch.commit()
+                        .addOnCompleteListener { deleteTask ->
+                            if (!deleteTask.isSuccessful) {
+                                result(EmptyResult.Error(deleteTask.exception?.message.toString()))
+                                return@addOnCompleteListener
+                            }
+                            result(EmptyResult.Success)
+                        }
+                }
+        }
+    }
+
     private fun getErrorMessage(task: Task<AuthResult>): String {
-        return when(task.exception) {
-            is FirebaseAuthInvalidCredentialsException -> { "正しいメールを入力してください" }
-            is FirebaseAuthUserCollisionException -> { "すでに登録されているメールです" }
-            is FirebaseAuthWeakPasswordException -> { "パスワードは６桁以上を入力してください" }
-            else -> { "予想せぬエラーが発生しました" }
+        return when (task.exception) {
+            is FirebaseAuthInvalidCredentialsException -> {
+                "正しいメールを入力してください"
+            }
+            is FirebaseAuthUserCollisionException -> {
+                "すでに登録されているメールです"
+            }
+            is FirebaseAuthWeakPasswordException -> {
+                "パスワードは６桁以上を入力してください"
+            }
+            else -> {
+                "予想せぬエラーが発生しました"
+            }
         }
     }
 }
